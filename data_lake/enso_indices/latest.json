@@ -3,9 +3,9 @@
   "kind": "enso",
   "updated_at": "2026-06-30T20:04:40-05:00",
   "files": {
-    "oni_raw": "data_lake\\enso_indices\\dt=2026-06-30\\oni.ascii.txt",
-    "oni_table": "data_lake\\enso_indices\\dt=2026-06-30\\oni.parquet",
-    "assessment": "data_lake\\enso_indices\\dt=2026-06-30\\assessment.json"
+    "oni_raw": "data_lake/enso_indices/dt=2026-06-30/oni.ascii.txt",
+    "oni_table": "data_lake/enso_indices/dt=2026-06-30/oni.parquet",
+    "assessment": "data_lake/enso_indices/dt=2026-06-30/assessment.json"
   },
   "fase": "Neutral",
   "intensidad": "—",

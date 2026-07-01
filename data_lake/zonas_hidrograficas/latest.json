@@ -3,8 +3,8 @@
   "kind": "vector",
   "updated_at": "2026-06-30T19:58:32-05:00",
   "files": {
-    "geojson": "data_lake\\zonas_hidrograficas\\dt=2026-06-30\\zonas_hidrograficas.geojson",
-    "parquet": "data_lake\\zonas_hidrograficas\\dt=2026-06-30\\zonas_hidrograficas.parquet"
+    "geojson": "data_lake/zonas_hidrograficas/dt=2026-06-30/zonas_hidrograficas.geojson",
+    "parquet": "data_lake/zonas_hidrograficas/dt=2026-06-30/zonas_hidrograficas.parquet"
   },
   "source_url": "https://visualizador.ideam.gov.co/gisserver/rest/services/StoryMaps_IDA/Alertas_Hidrologicas/MapServer/1",
   "descripcion": "Zonas hidrográficas (referencia)",

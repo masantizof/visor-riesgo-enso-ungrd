@@ -43,6 +43,7 @@ import pandas as pd
 
 from ideam_extractor import (
     DATA_ROOT, log, _partition_dir, _write_manifest, _maybe_upload_oss,
+    _resolve_manifest_path,
 )
 
 # --------------------------------------------------------------------------- #
@@ -190,13 +191,15 @@ def build(indices_path: Path, phase: str) -> dict:
 def load_enso_risk_geojson() -> dict:
     p = DATA_ROOT / "enso_riesgo" / "latest.json"
     meta = json.loads(p.read_text(encoding="utf-8"))
-    return json.loads(Path(meta["files"]["geojson"]).read_text(encoding="utf-8"))
+    ruta = _resolve_manifest_path(meta["files"]["geojson"])
+    return json.loads(ruta.read_text(encoding="utf-8"))
 
 
 def load_enso_risk_table() -> pd.DataFrame:
     p = DATA_ROOT / "enso_riesgo" / "latest.json"
     meta = json.loads(p.read_text(encoding="utf-8"))
-    return pd.read_parquet(meta["files"]["parquet"])
+    ruta = _resolve_manifest_path(meta["files"]["parquet"])
+    return pd.read_parquet(ruta)
 
 
 def _phase_from_assessment() -> str:

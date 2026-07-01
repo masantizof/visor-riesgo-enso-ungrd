@@ -220,7 +220,7 @@ def _write_manifest(dataset: str, kind: str, files: dict, **extra) -> None:
         "dataset": dataset,
         "kind": kind,
         "updated_at": dt.datetime.now().astimezone().isoformat(timespec="seconds"),
-        "files": {k: str(v) for k, v in files.items()},
+        "files": {k: Path(v).as_posix() for k, v in files.items()},
         **extra,
     }
     (DATA_ROOT / dataset).mkdir(parents=True, exist_ok=True)
@@ -473,13 +473,28 @@ def fetch_bart_monthly() -> int:
 # --------------------------------------------------------------------------- #
 # API de lectura para la app Streamlit (el "puente")
 # --------------------------------------------------------------------------- #
+def _resolve_manifest_path(path_str: str) -> Path:
+    """Convierte una ruta guardada en un manifiesto en una ruta válida en ESTE
+    entorno. Manifiestos viejos (generados en Windows, o antes de anclar
+    DATA_ROOT) pueden traer backslash y/o ser relativas al cwd de aquel
+    momento: normalizamos separador y anclamos al DATA_ROOT actual en vez de
+    confiar en el cwd del proceso que lee."""
+    p = Path(path_str.replace("\\", "/"))
+    if p.is_absolute():
+        return p
+    return DATA_ROOT.parent / p
+
+
 def _manifest(dataset: str) -> dict:
     p = DATA_ROOT / dataset / "latest.json"
     if not p.exists():
         raise FileNotFoundError(
             f"No hay snapshot de '{dataset}'. Corre el extractor primero."
         )
-    return json.loads(p.read_text(encoding="utf-8"))
+    manifest = json.loads(p.read_text(encoding="utf-8"))
+    if "files" in manifest:
+        manifest["files"] = {k: str(_resolve_manifest_path(v)) for k, v in manifest["files"].items()}
+    return manifest
 
 
 def load_latest_geojson(dataset: str) -> dict:

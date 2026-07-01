@@ -40,7 +40,7 @@ import pandas as pd
 from ideam_extractor import (  # noqa: F401
     SESSION, DATA_ROOT, TIMEOUT, log,
     _sha256, _partition_dir, _changed, _commit_hash,
-    _write_manifest, _maybe_upload_oss,
+    _write_manifest, _maybe_upload_oss, _resolve_manifest_path,
 )
 
 import requests
@@ -323,7 +323,8 @@ def load_enso_assessment() -> dict:
     if not p.exists():
         raise FileNotFoundError("No hay assessment ENSO. Corre fetch_enso_indices().")
     meta = json.loads(p.read_text(encoding="utf-8"))
-    return json.loads(Path(meta["files"]["assessment"]).read_text(encoding="utf-8"))
+    ruta = _resolve_manifest_path(meta["files"]["assessment"])
+    return json.loads(ruta.read_text(encoding="utf-8"))
 
 
 def run_enso() -> tuple[int, int]:

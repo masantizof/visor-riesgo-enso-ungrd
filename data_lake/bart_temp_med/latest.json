@@ -3,7 +3,7 @@
   "kind": "table",
   "updated_at": "2026-06-30T20:06:46-05:00",
   "files": {
-    "xlsx": "data_lake\\bart_temp_med\\dt=2026-06-30\\temperaturamed.xlsx"
+    "xlsx": "data_lake/bart_temp_med/dt=2026-06-30/temperaturamed.xlsx"
   },
   "source_url": "https://bart.ideam.gov.co/ospa/Alertas/datos_diarios_preliminares/temperaturamed.xlsx",
   "descripcion": "BART diario",
