@@ -57,7 +57,11 @@ except Exception:  # pragma: no cover
 # --------------------------------------------------------------------------- #
 # Configuración
 # --------------------------------------------------------------------------- #
-DATA_ROOT = Path(os.getenv("IDEAM_DATA_ROOT", "data_lake"))
+# Ancla al directorio de este archivo (no al cwd del proceso): en Streamlit
+# Community Cloud el directorio de trabajo al arrancar no es de fiar, y una
+# ruta relativa tipo Path("data_lake") puede no apuntar al repo.
+_DEFAULT_DATA_ROOT = Path(__file__).resolve().parent / "data_lake"
+DATA_ROOT = Path(os.getenv("IDEAM_DATA_ROOT", str(_DEFAULT_DATA_ROOT)))
 
 ARCGIS_BASE = (
     "https://visualizador.ideam.gov.co/gisserver/rest/services/StoryMaps_IDA"
