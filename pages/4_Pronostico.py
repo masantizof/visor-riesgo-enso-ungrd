@@ -18,8 +18,6 @@ from src import loaders, ui  # noqa: E402
 from src.maps import capa_raster, mapa_base, mostrar_mapa  # noqa: E402
 from src.downloads import boton_png, boton_generico  # noqa: E402
 
-st.set_page_config(page_title="Pronóstico · UNGRD", page_icon="📈", layout="wide")
-
 ui.header(
     "Pronóstico",
     "Pronóstico hidrometeorológico de <b>corto plazo</b> (24–72 h, ráster IDEAM) y "

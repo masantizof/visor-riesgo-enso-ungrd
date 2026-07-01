@@ -14,8 +14,6 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from src import loaders, ui  # noqa: E402
 from src.downloads import boton_csv, boton_geojson, boton_png, boton_generico  # noqa: E402
 
-st.set_page_config(page_title="Fuentes y descargas · UNGRD", page_icon="📂", layout="wide")
-
 ui.header(
     "Fuentes y descargas",
     "Catálogo completo de los datos que alimentan el visor: fuente, fecha de última "

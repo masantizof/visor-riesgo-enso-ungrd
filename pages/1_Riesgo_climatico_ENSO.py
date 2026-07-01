@@ -19,8 +19,6 @@ from src.maps import capa_vector_coloreada, mapa_base, mostrar_mapa, agregar_ley
 from src.downloads import boton_csv, boton_geojson  # noqa: E402
 from ideam_enso_risk import municipal_enso_risk, public_narrative  # noqa: E402
 
-st.set_page_config(page_title="Riesgo climático ENSO · UNGRD", page_icon="🗺️", layout="wide")
-
 ui.header(
     "Riesgo climático ENSO",
     "Cruce entre la <b>fase ENSO</b> vigente (o una fase hipotética que elijas) y los "

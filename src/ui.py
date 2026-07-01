@@ -8,6 +8,7 @@ la distribución y el estilo calquen las imágenes de referencia.
 """
 from __future__ import annotations
 
+import base64
 from pathlib import Path
 from typing import Optional
 
@@ -15,6 +16,11 @@ import streamlit as st
 
 ROOT = Path(__file__).resolve().parents[1]
 LOGO_PATH = ROOT / "assets" / "LOGO_UNGRD.png"
+
+
+@st.cache_data(show_spinner=False)
+def _logo_base64() -> str:
+    return base64.b64encode(LOGO_PATH.read_bytes()).decode("ascii")
 
 # --------------------------------------------------------------------------- #
 # Paleta institucional UNGRD — extraída por muestreo de píxeles del logo
@@ -80,6 +86,29 @@ def inject_css() -> None:
             font-weight: 700;
         }}
 
+        [data-testid="stSidebarContent"] {{
+            display: flex;
+            flex-direction: column;
+        }}
+        [data-testid="stSidebarContent"] div:has(> .ungrd-sidebar-brand) {{
+            order: -1;
+        }}
+
+        .ungrd-sidebar-brand {{
+            background-color: {COLORS['white']};
+            border-radius: 12px;
+            padding: 10px 14px;
+            margin: 6px 8px 2px 8px;
+        }}
+        .ungrd-sidebar-title {{
+            color: {COLORS['white']} !important;
+            font-weight: 800;
+            font-size: 1.15rem;
+            line-height: 1.35rem;
+            text-align: center;
+            margin: 10px 8px 18px 8px;
+        }}
+
         .ungrd-header-title {{
             color: {COLORS['navy']};
             font-weight: 800;
@@ -123,14 +152,27 @@ def inject_css() -> None:
     )
 
 
+def sidebar_brand() -> None:
+    """Tarjeta blanca con el logo + nombre del visor, arriba del menú (como en las
+    imágenes de referencia). Se llama una sola vez, desde app.py."""
+    inject_css()
+    with st.sidebar:
+        img_html = (
+            f'<img src="data:image/png;base64,{_logo_base64()}" style="width:100%;" />'
+            if LOGO_PATH.exists() else ""
+        )
+        st.markdown(
+            f"""
+            <div class="ungrd-sidebar-brand">{img_html}</div>
+            <div class="ungrd-sidebar-title">Visor de Riesgo<br/>Climático ENSO</div>
+            """,
+            unsafe_allow_html=True,
+        )
+
+
 def header(titulo: str, subtitulo_html: str = "") -> None:
     inject_css()
-    col_logo, col_title = st.columns([1, 6], vertical_alignment="center")
-    with col_logo:
-        if LOGO_PATH.exists():
-            st.image(str(LOGO_PATH), use_container_width=True)
-    with col_title:
-        st.markdown(f"<div class='ungrd-header-title'>{titulo}</div>", unsafe_allow_html=True)
+    st.markdown(f"<div class='ungrd-header-title'>{titulo}</div>", unsafe_allow_html=True)
     if subtitulo_html:
         st.markdown(f"<div class='ungrd-header-sub'>{subtitulo_html}</div>", unsafe_allow_html=True)
 

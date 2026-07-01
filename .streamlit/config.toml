@@ -13,6 +13,7 @@ textColor = "#FFFFFF"
 
 [client]
 showSidebarNavigation = true
+toolbarMode = "viewer"
 
 [browser]
 gatherUsageStats = false

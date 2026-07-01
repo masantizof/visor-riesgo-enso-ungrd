@@ -14,8 +14,6 @@ from src import loaders, ui  # noqa: E402
 from src.maps import capa_puntos, mapa_base, mostrar_mapa  # noqa: E402
 from src.downloads import boton_csv, boton_geojson, boton_generico  # noqa: E402
 
-st.set_page_config(page_title="Observación diaria · UNGRD", page_icon="🌡️", layout="wide")
-
 ui.header(
     "Observación diaria",
     "Precipitación y temperatura máxima registradas por estación (red IDEAM), y los "

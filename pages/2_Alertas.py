@@ -14,8 +14,6 @@ from src import loaders, ui  # noqa: E402
 from src.maps import capa_vector_coloreada, capa_raster, mapa_base, mostrar_mapa, agregar_leyenda  # noqa: E402
 from src.downloads import boton_csv, boton_geojson, boton_png  # noqa: E402
 
-st.set_page_config(page_title="Alertas · UNGRD", page_icon="🚨", layout="wide")
-
 ui.header(
     "Alertas",
     "Alertas <b>hidrológicas</b> vigentes por zona hidrográfica (IDEAM) y capas de "
