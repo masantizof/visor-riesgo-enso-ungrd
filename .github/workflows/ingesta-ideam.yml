@@ -1,0 +1,91 @@
+name: ingesta-ideam
+
+# Cadencias por tipo de fuente (UTC; Colombia = UTC-5).
+# Ajusta a tu necesidad real; no sobre-encuestes.
+on:
+  schedule:
+    # Alertas: cada 2 h en ventana diurna local (~06:00–22:00 COL => 11–03 UTC)
+    - cron: "0 11,13,15,17,19,21,23,1,3 * * *"
+    # Observación + ráster + BART: 2 veces/día (~13:05 y ~19:05 COL)
+    - cron: "5 18,0 * * *"
+  workflow_dispatch: {}   # permite correrlo a mano desde la pestaña Actions
+
+permissions:
+  contents: write          # para commitear los snapshots al repo (opción simple)
+
+concurrency:
+  group: ingesta-ideam
+  cancel-in-progress: false
+
+jobs:
+  extraer:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Instalar dependencias
+        run: pip install pandas pyarrow requests openpyxl oss2
+
+      - name: Seleccionar fuentes según la hora
+        id: plan
+        run: |
+          HOUR=$(date -u +%H)
+          # Las corridas "pesadas" (2/día) caen en 18 y 00 UTC -> todo.
+          if [ "$HOUR" = "18" ] || [ "$HOUR" = "00" ]; then
+            echo "args=--all" >> "$GITHUB_OUTPUT"
+            echo "pesada=1" >> "$GITHUB_OUTPUT"
+          else
+            echo "args=--vector --verify" >> "$GITHUB_OUTPUT"   # solo alertas/obs
+            echo "pesada=0" >> "$GITHUB_OUTPUT"
+          fi
+          # WRF/GFS (grillas) y CPT (predicción estacional) solo 1 vez/día.
+          if [ "$HOUR" = "00" ]; then
+            echo "diaria=1" >> "$GITHUB_OUTPUT"
+          else
+            echo "diaria=0" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Ejecutar extractor base (ArcGIS + BART)
+        env:
+          IDEAM_DATA_ROOT: data_lake
+          # OSS opcional: define estos secrets para espejar a Alibaba bronze.
+          OSS_ENDPOINT: ${{ secrets.OSS_ENDPOINT }}
+          OSS_BUCKET: ${{ secrets.OSS_BUCKET }}
+          OSS_ACCESS_KEY_ID: ${{ secrets.OSS_ACCESS_KEY_ID }}
+          OSS_ACCESS_KEY_SECRET: ${{ secrets.OSS_ACCESS_KEY_SECRET }}
+        run: python ideam_extractor.py ${{ steps.plan.outputs.args }}
+
+      - name: Índices ENSO (ONI) + fase
+        if: steps.plan.outputs.pesada == '1'
+        env:
+          IDEAM_DATA_ROOT: data_lake
+        run: python ideam_wrf_cpt.py --enso
+
+      - name: CPT (predicción estacional) y grillas WRF/GFS
+        if: steps.plan.outputs.diaria == '1'
+        env:
+          IDEAM_DATA_ROOT: data_lake
+        run: python ideam_wrf_cpt.py --cpt --wrf
+
+      - name: Cruce ENSO x riesgo municipal (SNGRD)
+        if: steps.plan.outputs.pesada == '1'
+        env:
+          IDEAM_DATA_ROOT: data_lake
+        run: python ideam_enso_risk.py --indices data/reference/indices_riesgo_municipal.geojson
+
+      - name: Commitear snapshots nuevos
+        run: |
+          git config user.name  "ingesta-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add data_lake
+          if git diff --cached --quiet; then
+            echo "Sin cambios que commitear."
+          else
+            git commit -m "ingesta: snapshot $(date -u +'%Y-%m-%d %H:%M UTC')"
+            git push
+          fi

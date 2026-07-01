@@ -1,0 +1,22 @@
+{
+  "dataset": "amenaza_idd",
+  "kind": "raster",
+  "updated_at": "2026-06-30T20:01:13-05:00",
+  "files": {
+    "png": "data_lake\\amenaza_idd\\dt=2026-06-30\\amenaza_idd.png",
+    "legend": "data_lake\\amenaza_idd\\dt=2026-06-30\\amenaza_idd_legend.json"
+  },
+  "source_url": "https://visualizador.ideam.gov.co/gisserver/rest/services/StoryMaps_IDA/Alertas__IDD/MapServer/export",
+  "descripcion": "Amenaza por deslizamientos (tipo por verificar)",
+  "bounds": [
+    [
+      -4.5,
+      -82.0
+    ],
+    [
+      13.5,
+      -66.0
+    ]
+  ],
+  "content_hash": "3bcbf90256b2ae649e29c68e9319f77af3ab15c29856d924370b4cd1b8e6d179"
+}

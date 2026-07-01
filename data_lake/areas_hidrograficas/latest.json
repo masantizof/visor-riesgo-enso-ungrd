@@ -1,0 +1,14 @@
+{
+  "dataset": "areas_hidrograficas",
+  "kind": "vector",
+  "updated_at": "2026-06-30T19:58:11-05:00",
+  "files": {
+    "geojson": "data_lake\\areas_hidrograficas\\dt=2026-06-30\\areas_hidrograficas.geojson",
+    "parquet": "data_lake\\areas_hidrograficas\\dt=2026-06-30\\areas_hidrograficas.parquet"
+  },
+  "source_url": "https://visualizador.ideam.gov.co/gisserver/rest/services/StoryMaps_IDA/Alertas_Hidrologicas/MapServer/0",
+  "descripcion": "Áreas hidrográficas (referencia)",
+  "n_features": 5,
+  "content_hash": "1f001a41aa9bd1c172580f8d1d7b72df8ef6ca1e032f028b78439acdf2e871e2",
+  "geometry_type": "esriGeometryPolygon"
+}

@@ -1,0 +1,18 @@
+{
+  "dataset": "enso_riesgo",
+  "kind": "enso_risk_cross",
+  "updated_at": "2026-06-30T20:06:25-05:00",
+  "files": {
+    "geojson": "data_lake\\enso_riesgo\\dt=2026-06-30\\enso_riesgo_municipal.geojson",
+    "parquet": "data_lake\\enso_riesgo\\dt=2026-06-30\\enso_riesgo_municipal.parquet",
+    "rollup": "data_lake\\enso_riesgo\\dt=2026-06-30\\rollup_departamental.json"
+  },
+  "fase_enso": "Neutral",
+  "n_municipios": 1122,
+  "n_alto": 27,
+  "n_medio": 88,
+  "indices_evaluados": [
+    "I_Vendaval"
+  ],
+  "nota": "Cruce fase ENSO × índices de riesgo SNGRD. La fase amplifica el riesgo; no lo causa. Producto de apoyo a SAT (Conocimiento del Riesgo)."
+}
