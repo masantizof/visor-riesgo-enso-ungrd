@@ -9,6 +9,7 @@ la distribución y el estilo calquen las imágenes de referencia.
 from __future__ import annotations
 
 import base64
+import html
 from pathlib import Path
 from typing import Optional
 
@@ -142,6 +143,12 @@ def inject_css() -> None:
         }}
         .ungrd-header-sub b {{ color: {COLORS['navy']}; }}
 
+        .ungrd-kpi-grid {{
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+            gap: 12px;
+            margin-bottom: 0.6rem;
+        }}
         .ungrd-kpi-card {{
             border-radius: 14px;
             padding: 14px 16px;
@@ -152,8 +159,11 @@ def inject_css() -> None:
         .ungrd-kpi-label {{ font-size: 0.82rem; font-weight: 600; opacity: 0.85; }}
         .ungrd-kpi-sub {{ font-size: 0.78rem; opacity: 0.7; }}
 
-        /* pantallas angostas: menos relleno, mapas mas compactos, botones con
-           mas alto para que el dedo los toque comodo */
+        /* pantallas angostas: 2x2 en vez de 1x4 (pedido explicito), menos
+           relleno, botones mas altos para que el dedo los toque comodo */
+        @media (max-width: 640px) {{
+            .ungrd-kpi-grid {{ grid-template-columns: repeat(2, 1fr); }}
+        }}
         @media (max-width: 480px) {{
             .ungrd-kpi-card {{ padding: 10px 12px; }}
             .ungrd-sidebar-brand {{ margin: 4px 6px 2px 6px; padding: 8px 10px; }}
@@ -222,31 +232,41 @@ def footer() -> None:
 
 
 def kpi_card(label: str, value: str, sub: str = "", icon: str = "📊", palette_idx: int = 0) -> str:
+    # value/sub suelen traer texto derivado de datos externos (nombre de
+    # estación, municipio...): se escapan antes de meterlos en HTML crudo.
     bg, fg = KPI_PALETTE[palette_idx % len(KPI_PALETTE)]
-    return f"""
-    <div class="ungrd-kpi-card" style="background-color:{bg}; color:{fg};">
-        <div class="ungrd-kpi-icon">{icon}</div>
-        <div class="ungrd-kpi-value">{value}</div>
-        <div class="ungrd-kpi-label">{label}</div>
-        {f'<div class="ungrd-kpi-sub">{sub}</div>' if sub else ''}
-    </div>
-    """
+    value_esc = html.escape(str(value))
+    label_esc = html.escape(str(label))
+    sub_esc = html.escape(str(sub)) if sub else ""
+    sub_html = f'<div class="ungrd-kpi-sub">{sub_esc}</div>' if sub_esc else ""
+    # Todo en una sola línea, sin indentación: HTML indentado dentro de un
+    # bloque multilínea lo interpreta Markdown como un code block ("4 espacios
+    # = código"), no como HTML — dejaba las tarjetas 2+ mostrando el <div>
+    # crudo en vez de renderizarlo (bug real, visto en captura móvil).
+    return (
+        f'<div class="ungrd-kpi-card" style="background-color:{bg}; color:{fg};">'
+        f'<div class="ungrd-kpi-icon">{icon}</div>'
+        f'<div class="ungrd-kpi-value">{value_esc}</div>'
+        f'<div class="ungrd-kpi-label">{label_esc}</div>'
+        f'{sub_html}</div>'
+    )
 
 
 def kpi_row(cards: list[dict]) -> None:
-    """cards: [{label, value, sub, icon}], se colorean en secuencia con KPI_PALETTE."""
-    cols = st.columns(len(cards))
-    for i, (c, col) in enumerate(zip(cards, cols)):
-        with col:
-            st.markdown(
-                kpi_card(c.get("label", ""), c.get("value", "—"), c.get("sub", ""),
-                         c.get("icon", "📊"), i),
-                unsafe_allow_html=True,
-            )
+    """cards: [{label, value, sub, icon}], se colorean en secuencia con KPI_PALETTE.
+
+    Grid CSS (no st.columns): st.columns apila a 1 por fila en móvil, pero el
+    requerimiento pide 2x2 en pantallas angostas en vez de 1x4."""
+    inject_css()
+    items = "".join(
+        kpi_card(c.get("label", ""), c.get("value", "—"), c.get("sub", ""), c.get("icon", "📊"), i)
+        for i, c in enumerate(cards)
+    )
+    st.markdown(f'<div class="ungrd-kpi-grid">{items}</div>', unsafe_allow_html=True)
 
 
 def badge(texto: str, color: str) -> str:
-    return f'<span class="ungrd-badge" style="background-color:{color};">{texto}</span>'
+    return f'<span class="ungrd-badge" style="background-color:{color};">{html.escape(str(texto))}</span>'
 
 
 def semaforo_enso(assessment: Optional[dict]) -> None:
@@ -259,6 +279,10 @@ def semaforo_enso(assessment: Optional[dict]) -> None:
     oni = assessment.get("oni")
     intensidad = assessment.get("intensidad", "—")
     tele = assessment.get("teleconexion_colombia", {})
+    # fase/intensidad vienen de ideam_wrf_cpt (valores de un set cerrado) pero
+    # trimestre/anio se leen directo del ONI de NOAA: se escapan igual.
+    fase_esc = html.escape(str(fase))
+    intensidad_esc = html.escape(str(intensidad))
 
     c1, c2 = st.columns([1, 2])
     with c1:
@@ -268,12 +292,12 @@ def semaforo_enso(assessment: Optional[dict]) -> None:
                         background-color:{COLORS['gray_bg']};">
                 <div style="width:78px;height:78px;border-radius:50%;background-color:{color};
                             margin:0 auto 10px auto;"></div>
-                <div style="font-size:1.3rem;font-weight:800;color:{color};">{fase}</div>
+                <div style="font-size:1.3rem;font-weight:800;color:{color};">{fase_esc}</div>
                 <div style="color:{COLORS['gray_text']};font-size:0.85rem;">
-                    Intensidad: {intensidad} · ONI: {oni:+.2f} °C
+                    Intensidad: {intensidad_esc} · ONI: {oni:+.2f} °C
                 </div>
                 <div style="color:{COLORS['gray_text']};font-size:0.75rem;margin-top:4px;">
-                    {assessment.get('trimestre','')} {assessment.get('anio','')}
+                    {html.escape(str(assessment.get('trimestre','')))} {html.escape(str(assessment.get('anio','')))}
                 </div>
             </div>
             """,
@@ -306,3 +330,10 @@ def sin_datos(dataset: str, detalle: str = "") -> None:
         "El extractor lo generará en la próxima corrida programada (o corre el script manualmente). "
         + detalle
     )
+
+
+def no_publicado(nota: str) -> None:
+    """Para datasets que el extractor SÍ verificó (con HEAD) y confirmó que la
+    fuente no los tiene publicados ahora mismo — distinto de 'nunca se corrió
+    el extractor'. Mensaje neutro, no de error."""
+    st.info(f"ℹ️ {nota}")

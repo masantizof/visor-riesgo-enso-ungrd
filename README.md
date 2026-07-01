@@ -16,30 +16,41 @@ GitHub Actions (cron)  ──►  extractores  ──►  data_lake/{dataset}/dt
 - `ideam_extractor.py` — capas ArcGIS (vector/ráster) y reportes BART (Excel).
 - `ideam_wrf_cpt.py` — grillas WRF/GFS, predicción estacional CPT, índices ENSO (ONI/NOAA).
 - `ideam_enso_risk.py` — cruce fase ENSO × índices de riesgo municipal (SNGRD).
+- `dane_terridata.py` — DIVIPOLA oficial (DANE); caracterización poblacional (hogares,
+  ruralidad, etnia, estrato) **pendiente de fuente nacional verificada** (ver Metodología).
+- `sala_crisis.py` — emergencias históricas UNGRD (dato estático, no corre por cron).
 
-Los tres son a la vez **script** (los corre el cron de `.github/workflows/ingesta-ideam.yml`)
-y **módulo** (la app importa sus funciones `load_*`/`latest_meta`). Si un dataset no
-tiene snapshot todavía, la página lo indica sin romperse.
+Los tres extractores IDEAM/ENSO/DANE son a la vez **script** (los corre el cron de
+`.github/workflows/ingesta-ideam.yml`) y **módulo** (la app importa sus funciones
+`load_*`/`latest_meta`). Si un dataset no tiene snapshot todavía, la página lo indica
+sin romperse.
 
 ## Estructura
 
 ```
-app.py                          # Inicio · Panorama ENSO
+app.py                          # router (st.navigation) + marca del sidebar
 pages/
-  1_Riesgo_climatico_ENSO.py    # producto central: selector de fase + mapa + tabla
-  2_Alertas.py                  # alertas hidrológicas, IDD, ICV
-  3_Observacion_diaria.py       # estaciones (mapa) + reportes BART (tablas)
-  4_Pronostico.py               # ráster corto plazo + galería CPT + grillas WRF/GFS
-  5_Fuentes_y_descargas.py      # catálogo completo con descarga por dataset
+  0_Panorama_ENSO.py             # semáforo de fase + exposición nacional
+  1_Riesgo_climatico_ENSO.py     # producto central: filtros cruzados + mapa + tabla
+  2_Alertas.py                   # consolidado por depto + alertas hidrológicas/IDD/ICV
+  3_Observacion_diaria.py        # estaciones (mapa) + reportes BART regionalizados
+  4_Pronostico.py                # ráster corto plazo + galería CPT
+  5_Fuentes_y_descargas.py       # catálogo completo con filtros y descarga por dataset
+  6_Metodologia_y_fuentes.py     # transparencia: cómo se calcula cada análisis
 src/
-  loaders.py                    # wrappers cacheados sobre los load_* de los 3 scripts
+  loaders.py                    # wrappers cacheados sobre los load_* de los módulos
   maps.py                       # folium: capas vectoriales, puntos, ráster, leyenda
-  ui.py                         # paleta UNGRD, header/footer, KPIs, semáforo ENSO
+  ui.py                         # paleta UNGRD, header/footer, KPIs (grid CSS), semáforo
   downloads.py                  # botones de descarga CSV/GeoJSON/PNG
-data/reference/indices_riesgo_municipal.geojson   # capa SNGRD simplificada (~5.6 MB)
+data/reference/
+  indices_riesgo_municipal.geojson    # capa SNGRD simplificada (~5.6 MB)
+  emergencias_sala_crisis.parquet     # Sala de Crisis (dato de arranque estático)
 data_lake/                      # snapshots (los produce el extractor / Actions)
-ideam_extractor.py, ideam_wrf_cpt.py, ideam_enso_risk.py   # extractores (raíz del repo)
+data_lake/_diagnostico/divipola_no_cruza.csv  # discrepancias de código entre fuentes
+ideam_extractor.py, ideam_wrf_cpt.py, ideam_enso_risk.py, dane_terridata.py   # extractores
+sala_crisis.py                  # emergencias históricas (raíz del repo)
 scripts/simplificar_indices_riesgo.py   # preparación única (no corre en producción)
+scripts/diagnostico_divipola.py         # genera divipola_no_cruza.csv
 .github/workflows/ingesta-ideam.yml     # cron de ingesta
 ```
 
@@ -62,7 +73,9 @@ pip install -r requirements.txt
 # (opcional) sembrar datos reales antes de correr la app:
 python ideam_extractor.py --all
 python ideam_wrf_cpt.py --all
+python dane_terridata.py
 python ideam_enso_risk.py --indices data/reference/indices_riesgo_municipal.geojson
+python scripts/diagnostico_divipola.py
 
 streamlit run app.py
 ```
@@ -108,3 +121,14 @@ python scripts/simplificar_indices_riesgo.py \
   para descarga.
 - Los datos de pronóstico y observación reciente son **preliminares**: no
   reemplazan los boletines oficiales de IDEAM ni las alertas de UNGRD.
+- **Caracterización poblacional DANE (familias reales, % rural/urbano, grupos
+  étnicos, estratos REC-SUI): pendiente.** La API Socrata de TerriData indicada
+  originalmente (`64cq-xb2k`) devuelve 404, y no se encontró sustituto de
+  cobertura nacional verificable (ver `pages/6_Metodologia_y_fuentes.py`,
+  sección 3, para el detalle de qué se intentó). Hoy solo está integrada la
+  DIVIPOLA oficial (nombres/coordenadas). Si consigues el archivo o enlace
+  correcto, `dane_terridata.py` ya tiene el join por DIVIPOLA listo
+  (`enriquecer()`) — solo falta la fuente.
+- Falta `assets/fases_el_nino.png` (imagen comparativa El Niño/La Niña de la
+  portada informativa): la página funciona sin ella (muestra un aviso), pero
+  para que se vea hay que agregar el archivo en esa ruta.

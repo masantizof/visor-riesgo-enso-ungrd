@@ -25,8 +25,36 @@ ui.header(
     "y su efecto amplificador sobre los riesgos de origen hidrometeorológico en Colombia. "
     "El diagnóstico de fase se calcula a partir del <b>Índice Oceánico El Niño (ONI)</b> "
     "publicado por el NOAA/CPC; el cruce territorial usa los "
-    "<b>índices de riesgo municipal del SNGRD</b>.",
+    "<b>índices de riesgo municipal del SNGRD</b>. "
+    "<a href='/Metodologia_y_fuentes' target='_self'>¿Cómo se calcula esto?</a>",
 )
+
+with st.expander("¿Qué es el Fenómeno El Niño?", expanded=False):
+    st.markdown(
+        "El Fenómeno El Niño hace parte del ciclo climático conocido como "
+        "El Niño–Oscilación del Sur (ENOS), el cual se origina por la interacción "
+        "entre el océano y la atmósfera en el Pacífico ecuatorial. Este ciclo tiene "
+        "tres fases: una fase cálida, conocida como El Niño; una fase fría, "
+        "denominada La Niña; y una fase neutral.\n\n"
+        "Es un fenómeno de variabilidad climática en la escala interanual, es decir, "
+        "que se presenta con recurrencia entre años, aunque sin una periodicidad "
+        "definida. Para su consolidación debe existir un acoplamiento entre variables "
+        "oceánicas y atmosféricas. Uno de los principales indicadores para determinar "
+        "su evolución y consolidación son las anomalías de la temperatura superficial "
+        "del mar en la Región El Niño 3.4, ubicada en el Pacífico ecuatorial central "
+        "entre 120°W y 170°W. Cuando estas anomalías se mantienen con valores iguales "
+        "o superiores a 0.5 °C durante al menos cinco meses consecutivos, se considera "
+        "que el fenómeno se ha consolidado."
+    )
+    _img_fases = Path(__file__).resolve().parents[1] / "assets" / "fases_el_nino.png"
+    if _img_fases.exists():
+        st.image(str(_img_fases), width="stretch",
+                  caption="Anomalías típicas de temperatura superficial del mar: El Niño (izq.) vs. La Niña (der.)")
+    else:
+        st.caption(
+            "📎 Falta `assets/fases_el_nino.png` (imagen comparativa El Niño / La Niña) — "
+            "colócala en esa ruta para que se muestre aquí."
+        )
 
 assessment = loaders.cargar_assessment_enso()
 ui.semaforo_enso(assessment)
@@ -55,6 +83,21 @@ else:
         {"label": "Municipios evaluados", "value": str(len(tabla)), "icon": "🗺️",
          "sub": "capa SNGRD, resolución simplificada"},
     ])
+
+    emergencias_agg = loaders.cargar_recurrencia_municipio_evento()
+    if emergencias_agg is not None:
+        cods_alto = set(tabla.loc[tabla["enso_nivel"] == "alto", "cod_dane"])
+        exp = emergencias_agg[emergencias_agg["Codigo Municipio"].isin(cods_alto)]
+        familias_hist = exp["familias"].sum()
+        n_muni_con_historial = exp["Codigo Municipio"].nunique()
+        fase_txt = assessment.get("fase", "la fase vigente") if assessment else "la fase vigente"
+        st.info(
+            f"📌 En fase **{fase_txt}**, los **{int(conteo.get('alto', 0))} municipios en riesgo ALTO** "
+            f"acumulan **{familias_hist:,.0f} familias afectadas históricamente** en emergencias "
+            f"registradas por Sala de Crisis ({n_muni_con_historial} de esos municipios tienen "
+            "historial). Esto es recurrencia histórica, **no** una proyección de familias en riesgo hoy "
+            "— la caracterización poblacional (DANE) está pendiente de una fuente verificada."
+        )
 
     col_map, col_tabla = st.columns([3, 2])
     with col_map:

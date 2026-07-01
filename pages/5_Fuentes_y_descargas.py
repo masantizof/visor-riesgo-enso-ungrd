@@ -34,7 +34,16 @@ ui.kpi_row([
 st.divider()
 
 filtro_estado = st.radio("Mostrar", ["Todos", "Solo disponibles", "Solo pendientes"], horizontal=True)
-filtro_texto = st.text_input("Buscar por nombre o descripción", "")
+
+fc1, fc2, fc3 = st.columns(3)
+with fc1:
+    filtro_texto = st.text_input("Buscar por nombre o descripción", "")
+with fc2:
+    tipos_disp = sorted({t for _, t, _ in loaders.CATALOGO.values()})
+    filtro_tipo = st.multiselect("Tipo de dato", tipos_disp)
+with fc3:
+    fuentes_disp = sorted({f for _, _, f in loaders.CATALOGO.values()})
+    filtro_fuente = st.multiselect("Fuente", fuentes_disp)
 
 for dataset, (nombre, tipo, fuente) in loaders.CATALOGO.items():
     esta = dataset in disponibles
@@ -43,6 +52,10 @@ for dataset, (nombre, tipo, fuente) in loaders.CATALOGO.items():
     if filtro_estado == "Solo pendientes" and esta:
         continue
     if filtro_texto and filtro_texto.lower() not in nombre.lower() and filtro_texto.lower() not in dataset.lower():
+        continue
+    if filtro_tipo and tipo not in filtro_tipo:
+        continue
+    if filtro_fuente and fuente not in filtro_fuente:
         continue
 
     with st.expander(f"{'✅' if esta else '⏳'}  {nombre}  ·  `{dataset}`"):
@@ -59,7 +72,10 @@ for dataset, (nombre, tipo, fuente) in loaders.CATALOGO.items():
         kind = meta.get("kind")
         files = meta.get("files", {})
 
-        if kind == "vector":
+        if kind == "unavailable":
+            ui.no_publicado(meta.get("note", "La fuente no tiene publicado este dataset ahora mismo."))
+
+        elif kind == "vector":
             geo = loaders.cargar_geojson(dataset)
             tabla = loaders.cargar_tabla(dataset)
             c1, c2 = st.columns(2)
@@ -124,5 +140,26 @@ for dataset, (nombre, tipo, fuente) in loaders.CATALOGO.items():
             with c2:
                 if geo is not None:
                     boton_geojson(geo, f"{dataset}.geojson", key=f"cat_geo_{dataset}")
+
+st.divider()
+st.subheader("Datos de referencia estáticos")
+st.caption(
+    "No forman parte del cron de ingesta diaria: son insumos fijos que se actualizan por separado."
+)
+
+with st.expander("✅  Índices de riesgo municipal SNGRD  ·  `indices_riesgo_municipal`"):
+    st.caption("Tipo: poligonos · Fuente: SNGRD (geometría simplificada para uso en el navegador)")
+    geo_ref = loaders.cargar_referencia_indices_riesgo()
+    if geo_ref is not None:
+        boton_geojson(geo_ref, "indices_riesgo_municipal.geojson", key="cat_geo_indices_ref")
+
+with st.expander("✅  Emergencias históricas Sala de Crisis  ·  `sala_crisis`"):
+    st.caption(
+        "Tipo: tabla · Fuente: UNGRD Sala de Crisis. COMENTARIOS enmascarado (teléfonos/correos "
+        "ocultos) porque la app es pública."
+    )
+    emerg = loaders.cargar_emergencias()
+    if emerg is not None:
+        boton_csv(emerg, "emergencias_sala_crisis.csv", key="cat_csv_sala_crisis")
 
 ui.footer()

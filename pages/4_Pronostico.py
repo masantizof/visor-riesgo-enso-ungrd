@@ -65,7 +65,11 @@ with tab_estacional:
     imgs = loaders.cargar_set_imagenes(ds)
     meta = loaders.metadatos(ds)
     if not imgs:
-        ui.sin_datos(ds, "Es posible que esta variable no esté publicada por el CPT en este momento.")
+        if meta is not None and meta.get("kind") == "unavailable":
+            # el extractor SI verifico con HEAD: esto es "no publicado", no "error"
+            ui.no_publicado(meta.get("note", f"El CPT no tiene publicada la variable {variable.lower()} ahora mismo."))
+        else:
+            ui.sin_datos(ds, "Aún no se ha corrido el extractor para esta variable.")
     else:
         # claves con forma "{PRODUCTO}_mes{N}" (ver ideam_wrf_cpt.fetch_cpt)
         productos = sorted({re.match(r"(.+)_mes\d+", k).group(1) for k in imgs if re.match(r"(.+)_mes\d+", k)})

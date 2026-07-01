@@ -92,6 +92,12 @@ with tab_bart:
             ("reporte_cordoba_mes", "Reporte Córdoba"),
         ],
     }
+    def _col_departamento(df):
+        for c in df.columns:
+            if str(c).strip().upper() in ("DEPARTAMENTO", "DEPARTAMEN"):
+                return c
+        return None
+
     for grupo, datasets in grupos.items():
         st.markdown(f"**{grupo}**")
         cols = st.columns(len(datasets))
@@ -103,9 +109,16 @@ with tab_bart:
                     if df is None:
                         ui.sin_datos(ds)
                     else:
-                        st.dataframe(df, hide_index=True, width="stretch", height=280)
+                        col_dpto = _col_departamento(df)
+                        df_f = df
+                        if col_dpto:
+                            opciones = sorted(df[col_dpto].dropna().astype(str).unique())
+                            sel = st.selectbox("Departamento", ["Todos"] + opciones, key=f"dpto_bart_{ds}")
+                            if sel != "Todos":
+                                df_f = df[df[col_dpto].astype(str) == sel]
+                        st.dataframe(df_f, hide_index=True, width="stretch", height=280)
                         ui.meta_caption(meta)
-                        boton_csv(df, f"{ds}.csv", key=f"csv_{ds}")
+                        boton_csv(df_f, f"{ds}.csv", key=f"csv_{ds}")
                         if ruta_xlsx and Path(ruta_xlsx).exists():
                             boton_generico(
                                 Path(ruta_xlsx).read_bytes(), Path(ruta_xlsx).name,

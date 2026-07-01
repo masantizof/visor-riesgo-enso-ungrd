@@ -46,6 +46,33 @@ def cargar_referencia_indices_riesgo() -> Optional[dict]:
 
 
 # --------------------------------------------------------------------------- #
+# Sala de Crisis (emergencias históricas) y DANE-DIVIPOLA (caracterización)
+# --------------------------------------------------------------------------- #
+@st.cache_data(ttl=TTL, show_spinner=False)
+def cargar_emergencias() -> Optional[pd.DataFrame]:
+    import sala_crisis as _sc
+    return _safe(_sc.load_emergencias)
+
+
+@st.cache_data(ttl=TTL, show_spinner=False)
+def cargar_recurrencia_municipio_evento() -> Optional[pd.DataFrame]:
+    import sala_crisis as _sc
+    return _safe(_sc.recurrencia_por_municipio_evento)
+
+
+@st.cache_data(ttl=TTL, show_spinner=False)
+def cargar_eventos_por_departamento() -> Optional[pd.DataFrame]:
+    import sala_crisis as _sc
+    return _safe(_sc.eventos_por_departamento)
+
+
+@st.cache_data(ttl=TTL, show_spinner=False)
+def cargar_caracterizacion_dane() -> Optional[pd.DataFrame]:
+    import dane_terridata as _dane
+    return _safe(_dane.load_caracterizacion)
+
+
+# --------------------------------------------------------------------------- #
 # Catálogo: dataset_id -> (nombre visible, tipo, descripción corta)
 # --------------------------------------------------------------------------- #
 CATALOGO = {
@@ -85,6 +112,8 @@ CATALOGO = {
     "cpt_prediccion_viento":        ("Predicción mensual CPT — Viento", "image_set", "IDEAM"),
     "enso_indices":            ("Índices ENSO (ONI) y fase", "enso", "NOAA/CPC"),
     "enso_riesgo":             ("Cruce ENSO × riesgo municipal (SNGRD)", "cruce", "UNGRD (derivado)"),
+    # Caracterización municipal
+    "dane_divipola":           ("DIVIPOLA oficial (nombres/coordenadas de municipio)", "tabla", "DANE"),
 }
 
 

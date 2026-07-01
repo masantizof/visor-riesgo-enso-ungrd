@@ -24,6 +24,7 @@ paginas = [
     st.Page("pages/3_Observacion_diaria.py", title="Observación diaria", icon="🌡️"),
     st.Page("pages/4_Pronostico.py", title="Pronóstico", icon="📈"),
     st.Page("pages/5_Fuentes_y_descargas.py", title="Fuentes y descargas", icon="📂"),
+    st.Page("pages/6_Metodologia_y_fuentes.py", title="Metodología y fuentes", icon="📖"),
 ]
 
 st.navigation(paginas).run()

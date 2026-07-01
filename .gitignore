@@ -4,6 +4,17 @@
 /DatosIndice.geojson
 /files.zip
 
+# Emergencias Sala de Crisis: la copia canónica vive en data/reference/
+# (ver sala_crisis.py); estos son el original adjunto y su respaldo crudo.
+/datos_maestros_limpios.parquet
+/EMERGENCIAS_SALA_CRISIS.csv
+
+# Documentos de requerimiento/planificación (no son parte de la app).
+/*.docx
+/promts.zip
+/PROMPT_*.md
+/ref_*.png
+
 # Grillas de modelo (WRF/GFS): pesan decenas-cientos de MB por corrida y no
 # se renderizan en la app (solo botón de descarga); no se versionan a diario
 # para no reventar el límite gratuito de GitHub/Streamlit Cloud.

@@ -7,6 +7,7 @@ amenaza por deslizamientos (IDD) e incendios de cobertura vegetal (ICV).
 import sys
 from pathlib import Path
 
+import pandas as pd
 import streamlit as st
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
@@ -17,15 +18,63 @@ from src.downloads import boton_csv, boton_geojson, boton_png  # noqa: E402
 ui.header(
     "Alertas",
     "Alertas <b>hidrológicas</b> vigentes por zona hidrográfica (IDEAM) y capas de "
-    "<b>amenaza</b> por deslizamientos e incendios de cobertura vegetal.",
+    "<b>amenaza</b> por deslizamientos e incendios de cobertura vegetal. "
+    "<a href='/Metodologia_y_fuentes' target='_self'>¿Cómo se calcula esto?</a>",
 )
 
 ALERTA_COLOR = {"ALERTA ROJA": "#D7263D", "ALERTA NARANJA": "#F4A83D", "ALERTA AMARILLA": ui.COLORS["gold"]}
+ALERTA_RANGO = {"ALERTA ROJA": 3, "ALERTA NARANJA": 2, "ALERTA AMARILLA": 1}
 
 geo = loaders.cargar_geojson("alertas_hidrologicas")
 meta = loaders.metadatos("alertas_hidrologicas")
 tabla = loaders.cargar_tabla("alertas_hidrologicas")
 
+# --------------------------------------------------------------------------- #
+# Consolidado por departamento: nivel más alto vigente + recurrencia histórica
+# (Sala de Crisis). Se agrupa por departamento porque las alertas hidrológicas
+# están zonificadas por área/zona hidrográfica, no por municipio.
+# --------------------------------------------------------------------------- #
+st.subheader("Consolidado de alertas por departamento")
+if tabla is not None:
+    eventos_dpto = loaders.cargar_eventos_por_departamento()
+    cons = tabla.copy()
+    cons["_rango"] = cons["NIVEL_A"].map(ALERTA_RANGO).fillna(0)
+    resumen = cons.groupby("DEP").agg(
+        zonas_en_alerta=("NIVEL_A", "count"),
+        nivel_mas_alto=("_rango", "max"),
+    ).reset_index()
+    inv_rango = {v: k.replace("ALERTA ", "") for k, v in ALERTA_RANGO.items()}
+    resumen["Nivel más alto"] = resumen["nivel_mas_alto"].map(inv_rango)
+    if eventos_dpto is not None:
+        emerg_dpto = eventos_dpto.groupby("Nombre Departamento")["n_emergencias"].sum().reset_index()
+        resumen = resumen.merge(
+            emerg_dpto, left_on="DEP", right_on="Nombre Departamento", how="left"
+        ).drop(columns=["Nombre Departamento"])
+        resumen["n_emergencias"] = resumen["n_emergencias"].fillna(0).astype(int)
+    else:
+        resumen["n_emergencias"] = None
+    resumen = resumen.sort_values("nivel_mas_alto", ascending=False)
+
+    n_rojo = int((resumen["nivel_mas_alto"] == 3).sum())
+    n_naranja = int((resumen["nivel_mas_alto"] == 2).sum())
+    ui.kpi_row([
+        {"label": "Departamentos con alerta ROJA", "value": str(n_rojo), "icon": "🔴"},
+        {"label": "Departamentos con alerta NARANJA (máx.)", "value": str(n_naranja), "icon": "🟠"},
+        {"label": "Departamentos con alguna alerta", "value": str(len(resumen)), "icon": "📍"},
+        {"label": "Zonas/subzonas en alerta (nacional)", "value": str(len(tabla)), "icon": "💧"},
+    ])
+    st.dataframe(
+        resumen.rename(columns={
+            "DEP": "Departamento", "zonas_en_alerta": "Zonas en alerta",
+            "n_emergencias": "Emergencias históricas (Sala de Crisis)",
+        })[["Departamento", "Nivel más alto", "Zonas en alerta", "Emergencias históricas (Sala de Crisis)"]],
+        hide_index=True, width="stretch", height=280,
+    )
+    boton_csv(resumen, "consolidado_alertas_departamento.csv", key="csv_consolidado")
+else:
+    ui.sin_datos("alertas_hidrologicas")
+
+st.divider()
 st.subheader("Alertas hidrológicas vigentes")
 st.caption(
     "Alertas por **nivel de las corrientes de agua** (ríos y quebradas), emitidas por IDEAM "

@@ -45,11 +45,18 @@ from ideam_extractor import (  # noqa: F401
 
 import requests
 
+# Sesión sin reintentos para los HEAD de "¿existe esta URL?": si el CPT
+# tiene decenas de combinaciones producto×mes a verificar, reintentar 3
+# veces con backoff exponencial en cada URL que falla multiplica un timeout
+# corto en una espera larga (fue la causa real del colgado original).
+_HEAD_SESSION = requests.Session()
+_HEAD_SESSION.headers.update(SESSION.headers)
+
 
 # --------------------------------------------------------------------------- #
 # A) Modelo grillado: WRF / GFS
 # --------------------------------------------------------------------------- #
-WRF_BASE = "http://bart.ideam.gov.co/wrfideam/new_modelo"
+WRF_BASE = "https://bart.ideam.gov.co/wrfideam/new_modelo"
 
 MODEL_DIRS = {
     "wrf00_netcdf": (f"{WRF_BASE}/WRF00COLOMBIA/netcdf", (".nc", ".nc4", ".netcdf")),
@@ -147,38 +154,69 @@ CPT_VARS = {"PREC": "precipitacion", "TEMP": "temperatura", "VIEN": "viento"}
 CPT_PRODUCTS = ["CLIMA", "DETER", "INDICE", "PROBVALORDET", "PROB", "PROB1090"]
 CPT_MESES = range(1, 7)
 
+# Timeout corto para el HEAD de verificación: si el servidor CPT no responde
+# rápido a un HEAD, no vale la pena esperar TIMEOUT completo (60s) por cada
+# una de las hasta 36 combinaciones producto×mes — eso fue lo que colgó el
+# extractor la primera vez (~100 min para 108 combinaciones).
+CPT_HEAD_TIMEOUT = 12
+
 
 def _exists(url: str) -> bool:
     try:
-        return SESSION.head(url, timeout=TIMEOUT, allow_redirects=True).status_code == 200
+        return _HEAD_SESSION.head(url, timeout=CPT_HEAD_TIMEOUT, allow_redirects=True).status_code == 200
     except requests.RequestException:
         return False
 
 
 def fetch_cpt(var_suffix: str = "PREC") -> bool:
-    """Descarga el set de imágenes CPT de una variable (6 productos × 6 meses)."""
+    """Descarga el set de imágenes CPT de una variable (hasta 6 productos × 6 meses).
+
+    Primero verifica con HEAD cuáles URLs existen (rápido, sin bajar el
+    binario); si ninguna existe, escribe un manifiesto "unavailable" en vez
+    de dejar el dataset sin snapshot alguno, para que la app distinga
+    "no publicado por CPT" de "nunca se corrió el extractor"."""
     if var_suffix not in CPT_VARS:
         raise ValueError(f"variable CPT desconocida: {var_suffix}")
     dataset = f"cpt_prediccion_{CPT_VARS[var_suffix]}"
-    pdir = _partition_dir(dataset)
 
+    candidatos = [
+        (prod, mes, f"{prod}MES{mes}{var_suffix}.png")
+        for prod in CPT_PRODUCTS for mes in CPT_MESES
+    ]
+    existentes = [
+        (prod, mes, fname) for prod, mes, fname in candidatos
+        if _exists(f"{CPT_BASE}/{fname}")
+    ]
+
+    if not existentes:
+        log.warning("· %-18s ninguna imagen publicada (var %s, %d URLs verificadas)",
+                     dataset, var_suffix, len(candidatos))
+        _write_manifest(
+            dataset, "unavailable",
+            files={},
+            source_url=CPT_BASE, variable=CPT_VARS[var_suffix],
+            n_images=0,
+            note=f"El CPT de IDEAM no tiene publicada la variable '{CPT_VARS[var_suffix]}' "
+                 "en la corrida más reciente (verificado con HEAD, no es un error de la app).",
+        )
+        return False
+
+    pdir = _partition_dir(dataset)
     saved, hashes = {}, []
-    for prod in CPT_PRODUCTS:
-        for mes in CPT_MESES:
-            fname = f"{prod}MES{mes}{var_suffix}.png"
-            url = f"{CPT_BASE}/{fname}"
-            try:
-                r = SESSION.get(url, timeout=TIMEOUT)
-                if not r.ok:
-                    continue
-                (pdir / fname).write_bytes(r.content)
-                saved[f"{prod}_mes{mes}"] = pdir / fname
-                hashes.append(_sha256(r.content))
-            except requests.RequestException:
+    for prod, mes, fname in existentes:
+        url = f"{CPT_BASE}/{fname}"
+        try:
+            r = SESSION.get(url, timeout=TIMEOUT)
+            if not r.ok:
                 continue
+            (pdir / fname).write_bytes(r.content)
+            saved[f"{prod}_mes{mes}"] = pdir / fname
+            hashes.append(_sha256(r.content))
+        except requests.RequestException:
+            continue
 
     if not saved:
-        log.warning("· %-18s sin imágenes (var %s no publicada)", dataset, var_suffix)
+        log.warning("· %-18s HEAD confirmó %d URLs pero GET falló en todas", dataset, len(existentes))
         return False
 
     combined = _sha256("".join(sorted(hashes)).encode())
@@ -196,7 +234,7 @@ def fetch_cpt(var_suffix: str = "PREC") -> bool:
     )
     for p in saved.values():
         _maybe_upload_oss(p)
-    log.info("✓ %-18s %d imágenes", dataset, len(saved))
+    log.info("✓ %-18s %d imágenes (de %d verificadas)", dataset, len(saved), len(existentes))
     return True
 
 
