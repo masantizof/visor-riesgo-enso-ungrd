@@ -4,8 +4,12 @@ pages/4_Pronostico.py
 Pronóstico de corto plazo (ráster: pronóstico 24h, acumulados 24h/72h,
 hidroestimador NOAA) y predicción estacional CPT (galería de imágenes por
 producto × horizonte, 6 meses), coherente con la fase ENSO vigente.
-Además, enlaces de descarga a las grillas de modelo (WRF/GFS) que se
-procesan fuera de la app.
+
+Las grillas de modelo (WRF/GFS, NetCDF/GeoTIFF/GRIB2) NO se ofrecen desde
+esta sección: pesan decenas-cientos de MB por corrida y se excluyen a
+propósito del repositorio (ver .gitignore) para no exceder el límite
+gratuito de GitHub/Streamlit Cloud. Quedan pendientes de una solución de
+almacenamiento externo (ver README).
 """
 import re
 import sys
@@ -16,17 +20,16 @@ import streamlit as st
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from src import loaders, ui  # noqa: E402
 from src.maps import capa_raster, mapa_base, mostrar_mapa  # noqa: E402
-from src.downloads import boton_png, boton_generico  # noqa: E402
+from src.downloads import boton_png  # noqa: E402
 
 ui.header(
     "Pronóstico",
     "Pronóstico hidrometeorológico de <b>corto plazo</b> (24–72 h, ráster IDEAM) y "
-    "predicción <b>estacional CPT</b> (6 meses), coherente con la fase ENSO vigente. "
-    "Las grillas de modelo (WRF/GFS) se ofrecen para descarga y procesamiento externo.",
+    "predicción <b>estacional CPT</b> (6 meses), coherente con la fase ENSO vigente.",
 )
 
-tab_corto, tab_estacional, tab_grillas = st.tabs(
-    ["🌧️ Corto plazo (ráster)", "📅 Estacional (CPT)", "🗄️ Grillas de modelo (WRF/GFS)"]
+tab_corto, tab_estacional = st.tabs(
+    ["🌧️ Corto plazo (ráster)", "📅 Estacional (CPT)"]
 )
 
 RASTER_DS = [
@@ -75,34 +78,8 @@ with tab_estacional:
         for mes, col in zip(meses_disponibles, cols):
             ruta = imgs.get(f"{prod_sel}_mes{mes}")
             with col:
-                st.image(ruta, caption=f"Mes {mes}", use_container_width=True)
+                st.image(ruta, caption=f"Mes {mes}", width="stretch")
                 boton_png(ruta, f"{ds}_{prod_sel}_mes{mes}.png", key=f"png_{ds}_{prod_sel}_{mes}")
         ui.meta_caption(meta)
-
-with tab_grillas:
-    st.caption(
-        "Estas grillas (NetCDF/GeoTIFF/GRIB2) se ofrecen para descarga y procesamiento externo "
-        "(xarray/cfgrib/rasterio); la app no las renderiza directamente."
-    )
-    for ds, titulo in (
-        ("wrf00_netcdf", "WRF 00Z Colombia — NetCDF"),
-        ("wrf00_tif", "WRF 00Z Colombia — GeoTIFF"),
-        ("gfs06_grib2", "GFS 06Z Colombia — GRIB2"),
-    ):
-        meta = loaders.metadatos(ds)
-        st.markdown(f"**{titulo}**")
-        if meta is None:
-            ui.sin_datos(ds)
-            continue
-        ui.meta_caption(meta)
-        ruta = Path(meta["files"]["data"])
-        if ruta.exists():
-            boton_generico(
-                ruta.read_bytes(), ruta.name, "application/octet-stream",
-                f"⬇️ Descargar {ruta.name} ({meta.get('size_bytes', 0) / 1e6:.1f} MB)",
-                key=f"grid_{ds}",
-            )
-        else:
-            st.caption("Archivo no disponible localmente en este entorno.")
 
 ui.footer()

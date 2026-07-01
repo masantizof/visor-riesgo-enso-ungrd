@@ -68,7 +68,7 @@ with tab_puntos:
                     "ESTACION": "Estación", "MUNICIPIO": "Municipio", "DEPARTAMEN": "Departamento",
                     "DATO": f"Dato ({unidad})", "CATEGORIA": "Categoría",
                 }).sort_values(f"Dato ({unidad})", ascending=False),
-                hide_index=True, use_container_width=True, height=430,
+                hide_index=True, width="stretch", height=430,
             )
 
         c1, c2 = st.columns(2)
@@ -103,7 +103,7 @@ with tab_bart:
                     if df is None:
                         ui.sin_datos(ds)
                     else:
-                        st.dataframe(df, hide_index=True, use_container_width=True, height=280)
+                        st.dataframe(df, hide_index=True, width="stretch", height=280)
                         ui.meta_caption(meta)
                         boton_csv(df, f"{ds}.csv", key=f"csv_{ds}")
                         if ruta_xlsx and Path(ruta_xlsx).exists():

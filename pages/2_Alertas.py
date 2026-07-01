@@ -27,6 +27,13 @@ meta = loaders.metadatos("alertas_hidrologicas")
 tabla = loaders.cargar_tabla("alertas_hidrologicas")
 
 st.subheader("Alertas hidrológicas vigentes")
+st.caption(
+    "Alertas por **nivel de las corrientes de agua** (ríos y quebradas), emitidas por IDEAM "
+    "para cada zona/subzona hidrográfica del país — no se refieren a lluvia ni a deslizamientos. "
+    "🔴 **Roja**: nivel crítico, crecida en curso o inminente. "
+    "🟠 **Naranja**: nivel alto, monitoreo permanente. "
+    "🟡 **Amarilla**: nivel de vigilancia preventiva."
+)
 if geo is None or tabla is None:
     ui.sin_datos("alertas_hidrologicas")
 else:
@@ -80,7 +87,7 @@ else:
                 "NOMAH": "Área hidrográfica", "NOMZH": "Zona hidrográfica", "NOMSZH": "Subzona",
                 "DEP": "Departamento", "NIVEL_A": "Nivel",
             }),
-            hide_index=True, use_container_width=True, height=430,
+            hide_index=True, width="stretch", height=430,
         )
 
     c1, c2 = st.columns(2)
@@ -91,6 +98,10 @@ else:
 
 st.divider()
 st.subheader("Alertas por deslizamientos (IDD) e incendios (ICV)")
+st.caption(
+    "IDD = índice de deslizamientos disparados por lluvia; ICV = incendios de cobertura vegetal. "
+    "Son capas independientes de las alertas hidrológicas de arriba."
+)
 c1, c2 = st.columns(2)
 for col, ds, titulo in ((c1, "alertas_idd", "Deslizamientos (IDD)"), (c2, "alertas_icv", "Incendios de cobertura vegetal (ICV)")):
     with col:
@@ -100,12 +111,13 @@ for col, ds, titulo in ((c1, "alertas_idd", "Deslizamientos (IDD)"), (c2, "alert
             ui.sin_datos(ds, "Esta capa venía fallando en el servidor de IDEAM al momento de la última corrida del extractor.")
         else:
             t = loaders.cargar_tabla(ds)
-            st.dataframe(t, hide_index=True, use_container_width=True, height=250)
+            st.dataframe(t, hide_index=True, width="stretch", height=250)
             boton_csv(t, f"{ds}.csv", key=f"csv_{ds}")
             boton_geojson(g, f"{ds}.geojson", key=f"geojson_{ds}")
 
 st.divider()
 st.subheader("Capas de amenaza (ráster)")
+st.caption("Mapa de fondo de susceptibilidad (no vigente/puntual como las alertas de arriba, sino condición estructural del territorio).")
 c1, c2 = st.columns(2)
 for col, ds, titulo in ((c1, "amenaza_idd", "Amenaza por deslizamientos"), (c2, "amenaza_icv", "Amenaza por incendios")):
     with col:

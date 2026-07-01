@@ -125,7 +125,7 @@ st.dataframe(
         "amenazas": "Amenazas (todas)", "amenaza_principal": "Amenaza principal",
         "narrativa": "Narrativa ciudadana",
     }),
-    hide_index=True, use_container_width=True, height=380,
+    hide_index=True, width="stretch", height=380,
 )
 
 c1, c2 = st.columns(2)

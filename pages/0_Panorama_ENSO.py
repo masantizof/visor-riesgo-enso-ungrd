@@ -81,7 +81,7 @@ else:
             "municipio": "Municipio", "departamento": "Departamento",
             "amenaza_principal": "Amenaza principal", "enso_score": "Índice",
         }).sort_values("Índice", ascending=False)
-        st.dataframe(alto, hide_index=True, height=430, use_container_width=True)
+        st.dataframe(alto, hide_index=True, height=430, width="stretch")
 
     c1, c2 = st.columns(2)
     with c1:

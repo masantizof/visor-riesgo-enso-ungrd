@@ -40,7 +40,7 @@ NIVEL_COLOR = {
     "alto": "#D7263D",
     "medio": "#F4A83D",
     "bajo": "#2E8B57",
-    "sin dato": "#B0B0B0",
+    "sin dato": "#7A7F87",  # mas oscuro que el gris claro original: mejor contraste con texto blanco
 }
 
 FASE_COLOR = {
@@ -71,6 +71,20 @@ def inject_css() -> None:
         [data-testid="stSidebar"] * {{
             color: {COLORS['white']} !important;
         }}
+        /* la cajita de busqueda de paginas tiene fondo blanco: el texto
+           blanco de la regla de arriba la deja ilegible (blanco sobre
+           blanco). Forzamos texto oscuro ahi y en cualquier input/desplegable
+           con fondo claro dentro del sidebar. */
+        [data-testid="stSidebar"] input,
+        [data-testid="stSidebar"] [role="option"],
+        [data-testid="stSidebar"] [role="listbox"],
+        [data-testid="stSidebarNav"] [data-testid="stSidebarNavSearchInput"] {{
+            color: {COLORS['navy']} !important;
+        }}
+        [data-testid="stSidebar"] input::placeholder {{
+            color: {COLORS['gray_text']} !important;
+            opacity: 1;
+        }}
         [data-testid="stSidebarNav"] a {{
             border-radius: 8px;
             margin: 2px 8px;
@@ -81,7 +95,12 @@ def inject_css() -> None:
         [data-testid="stSidebarNav"] a[aria-current="page"] {{
             background-color: {COLORS['white']};
         }}
-        [data-testid="stSidebarNav"] a[aria-current="page"] span {{
+        /* el texto/icono del item activo puede estar en cualquier hijo (span,
+           p, div...) segun la version de Streamlit: cubrimos todos los
+           descendientes, no solo "span", para que nunca quede blanco sobre
+           blanco. */
+        [data-testid="stSidebarNav"] a[aria-current="page"],
+        [data-testid="stSidebarNav"] a[aria-current="page"] * {{
             color: {COLORS['navy']} !important;
             font-weight: 700;
         }}
@@ -112,13 +131,13 @@ def inject_css() -> None:
         .ungrd-header-title {{
             color: {COLORS['navy']};
             font-weight: 800;
-            font-size: 2.1rem;
+            font-size: clamp(1.4rem, 5vw, 2.1rem);
             margin-bottom: 0.15rem;
         }}
         .ungrd-header-sub {{
             color: {COLORS['gray_text']};
-            font-size: 0.98rem;
-            line-height: 1.5rem;
+            font-size: clamp(0.86rem, 2.6vw, 0.98rem);
+            line-height: 1.45rem;
             margin-bottom: 1.1rem;
         }}
         .ungrd-header-sub b {{ color: {COLORS['navy']}; }}
@@ -129,9 +148,19 @@ def inject_css() -> None:
             height: 100%;
         }}
         .ungrd-kpi-icon {{ font-size: 1.3rem; }}
-        .ungrd-kpi-value {{ font-size: 1.7rem; font-weight: 800; line-height: 2rem; }}
+        .ungrd-kpi-value {{ font-size: clamp(1.35rem, 4.5vw, 1.7rem); font-weight: 800; line-height: 1.9rem; }}
         .ungrd-kpi-label {{ font-size: 0.82rem; font-weight: 600; opacity: 0.85; }}
         .ungrd-kpi-sub {{ font-size: 0.78rem; opacity: 0.7; }}
+
+        /* pantallas angostas: menos relleno, mapas mas compactos, botones con
+           mas alto para que el dedo los toque comodo */
+        @media (max-width: 480px) {{
+            .ungrd-kpi-card {{ padding: 10px 12px; }}
+            .ungrd-sidebar-brand {{ margin: 4px 6px 2px 6px; padding: 8px 10px; }}
+            .block-container {{ padding-left: 1rem; padding-right: 1rem; }}
+            button[kind], .stDownloadButton button {{ min-height: 2.6rem; }}
+        }}
+        iframe {{ max-width: 100%; }}
 
         .ungrd-badge {{
             display: inline-block; padding: 3px 12px; border-radius: 999px;
