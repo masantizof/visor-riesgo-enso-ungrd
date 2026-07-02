@@ -1,14 +1,14 @@
 {
   "dataset": "precipitacion_diaria",
   "kind": "vector",
-  "updated_at": "2026-06-30T19:57:54-05:00",
+  "updated_at": "2026-07-02T19:26:04+00:00",
   "files": {
-    "geojson": "data_lake/precipitacion_diaria/dt=2026-06-30/precipitacion_diaria.geojson",
-    "parquet": "data_lake/precipitacion_diaria/dt=2026-06-30/precipitacion_diaria.parquet"
+    "geojson": "data_lake/precipitacion_diaria/dt=2026-07-02/precipitacion_diaria.geojson",
+    "parquet": "data_lake/precipitacion_diaria/dt=2026-07-02/precipitacion_diaria.parquet"
   },
   "source_url": "https://visualizador.ideam.gov.co/gisserver/rest/services/StoryMaps_IDA/Datos_Precipitacion/MapServer/0",
   "descripcion": "Precipitación diaria por estación",
-  "n_features": 646,
-  "content_hash": "a21736d0d68752769ee8daca079a1862132baa26bcf671d5a0702730102a5a6e",
+  "n_features": 651,
+  "content_hash": "aa3f1fe920a13f7d1479a0ffbacd2454872f47a03683cb2f2796d5d0b61e98f2",
   "geometry_type": "esriGeometryPoint"
 }

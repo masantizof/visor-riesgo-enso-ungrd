@@ -1,11 +1,11 @@
 {
   "dataset": "bart_temp_max",
   "kind": "table",
-  "updated_at": "2026-06-30T20:06:46-05:00",
+  "updated_at": "2026-07-02T18:31:11+00:00",
   "files": {
-    "xlsx": "data_lake/bart_temp_max/dt=2026-06-30/temperaturamax.xlsx"
+    "xlsx": "data_lake/bart_temp_max/dt=2026-07-02/temperaturamax.xlsx"
   },
   "source_url": "https://bart.ideam.gov.co/ospa/Alertas/datos_diarios_preliminares/temperaturamax.xlsx",
   "descripcion": "BART diario",
-  "signature": "Tue, 30 Jun 2026 15:18:12 GMT|326205"
+  "signature": "Thu, 02 Jul 2026 15:12:58 GMT|308114"
 }
