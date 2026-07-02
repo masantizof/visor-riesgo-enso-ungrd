@@ -1,11 +1,11 @@
 {
   "dataset": "enso_indices",
   "kind": "enso",
-  "updated_at": "2026-06-30T20:04:40-05:00",
+  "updated_at": "2026-07-02T00:15:32+00:00",
   "files": {
-    "oni_raw": "data_lake/enso_indices/dt=2026-06-30/oni.ascii.txt",
-    "oni_table": "data_lake/enso_indices/dt=2026-06-30/oni.parquet",
-    "assessment": "data_lake/enso_indices/dt=2026-06-30/assessment.json"
+    "oni_raw": "data_lake/enso_indices/dt=2026-07-02/oni.ascii.txt",
+    "oni_table": "data_lake/enso_indices/dt=2026-07-02/oni.parquet",
+    "assessment": "data_lake/enso_indices/dt=2026-07-02/assessment.json"
   },
   "fase": "Neutral",
   "intensidad": "—",
