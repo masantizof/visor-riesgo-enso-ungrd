@@ -27,9 +27,12 @@ st.markdown(
     "- **El Niño**: ONI ≥ +0.5 °C\n"
     "- **La Niña**: ONI ≤ −0.5 °C\n"
     "- **Neutral**: entre −0.5 y +0.5 °C\n\n"
-    "Para que la fase se considere *consolidada* (no solo una fluctuación puntual), esos valores deben "
-    "sostenerse durante al menos 5 trimestres móviles consecutivos — es el criterio estándar de NOAA. "
-    "La **intensidad** (débil/moderado/fuerte/muy fuerte) es función del valor absoluto del ONI."
+    "NOAA declara un episodio El Niño/La Niña *oficial* solo cuando ese umbral se sostiene 5 trimestres "
+    "móviles consecutivos. **Esta app no aplica ese filtro de consolidación**: clasifica con el "
+    "**último trimestre móvil publicado únicamente** (columna `ANOM` de `oni.ascii.txt`), así que "
+    "muestra el estado más reciente disponible, no si NOAA ya declaró el episodio formalmente — pueden "
+    "diferir en los bordes de una transición de fase. "
+    "La **intensidad** (débil/moderado/fuerte/muy fuerte) es función del valor absoluto de ese mismo ONI."
 )
 
 st.subheader("2. Cruce ENSO × riesgo municipal")
@@ -37,16 +40,18 @@ st.markdown(
     "El cruce **amplifica** el riesgo asociado a la fase vigente; **no lo causa** por sí sola y "
     "**no es una probabilidad condicional** de evento extremo (eso requeriría un análisis histórico "
     "de frecuencias que está fuera del alcance actual — es un desarrollo futuro posible).\n\n"
-    "Lo que hace el cruce es **seleccionar y ponderar** los índices de riesgo municipal del SNGRD "
-    "que son coherentes con la fase:\n\n"
+    "Lo que hace el cruce es **seleccionar** los índices SNGRD asociados a la fase y tomar, por "
+    "municipio, el **valor más alto entre esos índices** (no un promedio ni una suma — el peor caso "
+    "entre las amenazas relevantes para esa fase):\n\n"
     "- **El Niño** (condición seca): incendios de cobertura vegetal, desabastecimiento hídrico, déficit "
-    "hídrico.\n"
+    "hídrico (3 índices).\n"
     "- **La Niña** (condición húmeda): inundaciones, crecientes súbitas, avenidas torrenciales, "
-    "movimientos en masa.\n"
-    "- **Neutral**: no hay amplificación dominante; se pondera de forma más uniforme (vendavales y "
-    "otros índices no ligados a la fase).\n\n"
-    "El **nivel** (alto/medio/bajo) resulta de terciles sobre el índice ponderado resultante, calculado "
-    "sobre los 1.122 municipios evaluados."
+    "movimientos en masa (4 índices).\n"
+    "- **Neutral**: sin señal ENSO dominante, solo se evalúa **vendavales** — el único índice marcado "
+    "'Ambas' en el modelo, es decir, no ligado a una fase específica.\n\n"
+    "El **nivel** sale de umbrales fijos sobre ese valor máximo: **alto** si ≥ 0.66, **medio** si ≥ 0.33, "
+    "**bajo** en otro caso (escala del índice SNGRD de origen, 0–1). No son terciles ni percentiles "
+    "calculados sobre la distribución nacional — son cortes fijos aplicados por municipio."
 )
 
 st.subheader("3. Exposición: familias, ruralidad, estratos y recurrencia histórica")

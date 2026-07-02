@@ -14,6 +14,7 @@
 /promts.zip
 /PROMPT_*.md
 /ref_*.png
+/DOCUMENTACION_TECNICA.md
 
 # Grillas de modelo (WRF/GFS): pesan decenas-cientos de MB por corrida y no
 # se renderizan en la app (solo botón de descarga); no se versionan a diario
