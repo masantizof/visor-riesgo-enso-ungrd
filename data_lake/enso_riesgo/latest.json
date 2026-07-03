@@ -1,11 +1,11 @@
 {
   "dataset": "enso_riesgo",
   "kind": "enso_risk_cross",
-  "updated_at": "2026-07-02T18:31:18+00:00",
+  "updated_at": "2026-07-03T00:14:30+00:00",
   "files": {
-    "geojson": "data_lake/enso_riesgo/dt=2026-07-02/enso_riesgo_municipal.geojson",
-    "parquet": "data_lake/enso_riesgo/dt=2026-07-02/enso_riesgo_municipal.parquet",
-    "rollup": "data_lake/enso_riesgo/dt=2026-07-02/rollup_departamental.json"
+    "geojson": "data_lake/enso_riesgo/dt=2026-07-03/enso_riesgo_municipal.geojson",
+    "parquet": "data_lake/enso_riesgo/dt=2026-07-03/enso_riesgo_municipal.parquet",
+    "rollup": "data_lake/enso_riesgo/dt=2026-07-03/rollup_departamental.json"
   },
   "fase_enso": "Neutral",
   "n_municipios": 1122,
