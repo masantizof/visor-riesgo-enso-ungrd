@@ -1,17 +1,21 @@
 {
   "dataset": "enso_riesgo",
   "kind": "enso_risk_cross",
-  "updated_at": "2026-07-03T18:19:13+00:00",
+  "updated_at": "2026-07-04T00:13:39+00:00",
   "files": {
-    "geojson": "data_lake/enso_riesgo/dt=2026-07-03/enso_riesgo_municipal.geojson",
-    "parquet": "data_lake/enso_riesgo/dt=2026-07-03/enso_riesgo_municipal.parquet",
-    "rollup": "data_lake/enso_riesgo/dt=2026-07-03/rollup_departamental.json"
+    "geojson": "data_lake/enso_riesgo/dt=2026-07-04/enso_riesgo_municipal.geojson",
+    "parquet": "data_lake/enso_riesgo/dt=2026-07-04/enso_riesgo_municipal.parquet",
+    "rollup": "data_lake/enso_riesgo/dt=2026-07-04/rollup_departamental.json"
   },
-  "fase_enso": "Neutral",
+  "fase_enso": "El Niño",
   "n_municipios": 1122,
-  "n_alto": 27,
-  "n_medio": 88,
+  "n_alto": 228,
+  "n_medio": 401,
   "indices_evaluados": [
+    "I_IF",
+    "I_Desabast",
+    "I_DHTLL_In",
+    "I_DHTS_I_D",
     "I_Vendaval"
   ],
   "nota": "Cruce fase ENSO × índices de riesgo SNGRD. La fase amplifica el riesgo; no lo causa. Producto de apoyo a SAT (Conocimiento del Riesgo)."
