@@ -1,0 +1,200 @@
+{
+  "AMAZONAS": {
+    "alto": 0,
+    "bajo": 8,
+    "medio": 0,
+    "sin dato": 3
+  },
+  "ANTIOQUIA": {
+    "alto": 31,
+    "bajo": 43,
+    "medio": 34,
+    "sin dato": 17
+  },
+  "ARAUCA": {
+    "alto": 4,
+    "bajo": 1,
+    "medio": 2,
+    "sin dato": 0
+  },
+  "ARCHIPIÉLAGO DE SAN ANDRÉS, PROVIDENCIA Y SANTA CATALINA": {
+    "alto": 0,
+    "bajo": 0,
+    "medio": 2,
+    "sin dato": 0
+  },
+  "ATLÁNTICO": {
+    "alto": 4,
+    "bajo": 9,
+    "medio": 10,
+    "sin dato": 0
+  },
+  "BOGOTÁ, D.C.": {
+    "alto": 0,
+    "bajo": 0,
+    "medio": 1,
+    "sin dato": 0
+  },
+  "BOLÍVAR": {
+    "alto": 30,
+    "bajo": 0,
+    "medio": 16,
+    "sin dato": 0
+  },
+  "BOYACÁ": {
+    "alto": 5,
+    "bajo": 32,
+    "medio": 28,
+    "sin dato": 58
+  },
+  "CALDAS": {
+    "alto": 2,
+    "bajo": 8,
+    "medio": 11,
+    "sin dato": 6
+  },
+  "CAQUETÁ": {
+    "alto": 4,
+    "bajo": 4,
+    "medio": 8,
+    "sin dato": 0
+  },
+  "CASANARE": {
+    "alto": 7,
+    "bajo": 3,
+    "medio": 8,
+    "sin dato": 1
+  },
+  "CAUCA": {
+    "alto": 13,
+    "bajo": 7,
+    "medio": 21,
+    "sin dato": 1
+  },
+  "CESAR": {
+    "alto": 11,
+    "bajo": 5,
+    "medio": 9,
+    "sin dato": 0
+  },
+  "CHOCÓ": {
+    "alto": 5,
+    "bajo": 2,
+    "medio": 13,
+    "sin dato": 10
+  },
+  "CUNDINAMARCA": {
+    "alto": 12,
+    "bajo": 29,
+    "medio": 39,
+    "sin dato": 36
+  },
+  "CÓRDOBA": {
+    "alto": 19,
+    "bajo": 2,
+    "medio": 9,
+    "sin dato": 0
+  },
+  "GUAINÍA": {
+    "alto": 0,
+    "bajo": 4,
+    "medio": 4,
+    "sin dato": 1
+  },
+  "GUAVIARE": {
+    "alto": 3,
+    "bajo": 0,
+    "medio": 1,
+    "sin dato": 0
+  },
+  "HUILA": {
+    "alto": 6,
+    "bajo": 6,
+    "medio": 22,
+    "sin dato": 3
+  },
+  "LA GUAJIRA": {
+    "alto": 6,
+    "bajo": 2,
+    "medio": 7,
+    "sin dato": 0
+  },
+  "MAGDALENA": {
+    "alto": 10,
+    "bajo": 3,
+    "medio": 17,
+    "sin dato": 0
+  },
+  "META": {
+    "alto": 8,
+    "bajo": 10,
+    "medio": 10,
+    "sin dato": 1
+  },
+  "NARIÑO": {
+    "alto": 3,
+    "bajo": 16,
+    "medio": 17,
+    "sin dato": 28
+  },
+  "NORTE DE SANTANDER": {
+    "alto": 4,
+    "bajo": 10,
+    "medio": 19,
+    "sin dato": 7
+  },
+  "PUTUMAYO": {
+    "alto": 5,
+    "bajo": 1,
+    "medio": 7,
+    "sin dato": 0
+  },
+  "QUINDIO": {
+    "alto": 2,
+    "bajo": 6,
+    "medio": 2,
+    "sin dato": 2
+  },
+  "RISARALDA": {
+    "alto": 7,
+    "bajo": 2,
+    "medio": 5,
+    "sin dato": 0
+  },
+  "SANTANDER": {
+    "alto": 8,
+    "bajo": 25,
+    "medio": 25,
+    "sin dato": 29
+  },
+  "SUCRE": {
+    "alto": 7,
+    "bajo": 4,
+    "medio": 15,
+    "sin dato": 0
+  },
+  "TOLIMA": {
+    "alto": 5,
+    "bajo": 16,
+    "medio": 23,
+    "sin dato": 3
+  },
+  "VALLE DEL CAUCA": {
+    "alto": 3,
+    "bajo": 21,
+    "medio": 15,
+    "sin dato": 3
+  },
+  "VAUPÉS": {
+    "alto": 0,
+    "bajo": 5,
+    "medio": 1,
+    "sin dato": 0
+  },
+  "VICHADA": {
+    "alto": 4,
+    "bajo": 0,
+    "medio": 0,
+    "sin dato": 0
+  }
+}
