@@ -1,7 +1,7 @@
 {
   "dataset": "enso_riesgo",
   "kind": "enso_risk_cross",
-  "updated_at": "2026-07-05T00:09:49+00:00",
+  "updated_at": "2026-07-05T18:10:34+00:00",
   "files": {
     "geojson": "data_lake/enso_riesgo/dt=2026-07-05/enso_riesgo_municipal.geojson",
     "parquet": "data_lake/enso_riesgo/dt=2026-07-05/enso_riesgo_municipal.parquet",
