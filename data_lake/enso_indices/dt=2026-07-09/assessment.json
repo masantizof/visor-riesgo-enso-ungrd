@@ -1,0 +1,24 @@
+{
+  "trimestre": "AMJ",
+  "anio": 2026,
+  "oni": 0.98,
+  "fase": "El Niño",
+  "intensidad": "débil",
+  "teleconexion_colombia": {
+    "precipitacion": "déficit (más seco que lo normal)",
+    "temperatura": "por encima de lo normal",
+    "riesgos": [
+      "sequía",
+      "incendios de cobertura vegetal",
+      "desabastecimiento hídrico"
+    ],
+    "regiones_sensibles": [
+      "Andina",
+      "Caribe",
+      "Pacífico"
+    ]
+  },
+  "fuente": "https://www.cpc.ncep.noaa.gov/data/indices/oni.ascii.txt",
+  "actualizado": "2026-07-09T00:18:11+00:00",
+  "nota": "La fase ENSO se diagnostica del Pacífico ecuatorial (ONI), no del WRF/GFS. La teleconexión es probabilística, no determinista."
+}
