@@ -1,7 +1,7 @@
 {
   "dataset": "enso_indices",
   "kind": "enso",
-  "updated_at": "2026-07-10T01:27:19+00:00",
+  "updated_at": "2026-07-10T18:43:33+00:00",
   "files": {
     "oni_raw": "data_lake/enso_indices/dt=2026-07-10/oni.ascii.txt",
     "oni_table": "data_lake/enso_indices/dt=2026-07-10/oni.parquet",
