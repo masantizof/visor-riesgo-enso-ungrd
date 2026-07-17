@@ -1,11 +1,11 @@
 {
   "dataset": "acumulado_tempmax_mes",
   "kind": "table",
-  "updated_at": "2026-07-15T18:14:41+00:00",
+  "updated_at": "2026-07-17T00:04:52+00:00",
   "files": {
-    "xlsx": "data_lake/acumulado_tempmax_mes/dt=2026-07-15/Temp-max-julio-26.xlsx"
+    "xlsx": "data_lake/acumulado_tempmax_mes/dt=2026-07-17/Temp-max-julio-26.xlsx"
   },
   "source_url": "https://bart.ideam.gov.co/ospa/Alertas/datos_diarios_preliminares/Temp-max-julio-26.xlsx",
   "descripcion": "Acumulado mensual (Temp-max-julio-26.xlsx)",
-  "signature": "Wed, 15 Jul 2026 14:00:43 GMT|88574"
+  "signature": "Thu, 16 Jul 2026 13:45:55 GMT|90263"
 }
