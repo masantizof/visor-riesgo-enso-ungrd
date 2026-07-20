@@ -1,11 +1,11 @@
 {
   "dataset": "bart_precipitacion",
   "kind": "table",
-  "updated_at": "2026-07-20T00:04:27+00:00",
+  "updated_at": "2026-07-20T18:58:06+00:00",
   "files": {
     "xlsx": "data_lake/bart_precipitacion/dt=2026-07-20/precipitacion.xlsx"
   },
   "source_url": "https://bart.ideam.gov.co/ospa/Alertas/datos_diarios_preliminares/precipitacion.xlsx",
   "descripcion": "BART diario",
-  "signature": "Sun, 19 Jul 2026 15:22:29 GMT|1846741"
+  "signature": "Mon, 20 Jul 2026 15:59:06 GMT|1849434"
 }

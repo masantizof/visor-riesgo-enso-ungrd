@@ -1,7 +1,7 @@
 {
   "dataset": "pronostico_precip_24h",
   "kind": "raster",
-  "updated_at": "2026-07-20T00:04:03+00:00",
+  "updated_at": "2026-07-20T18:57:59+00:00",
   "files": {
     "png": "data_lake/pronostico_precip_24h/dt=2026-07-20/pronostico_precip_24h.png",
     "legend": "data_lake/pronostico_precip_24h/dt=2026-07-20/pronostico_precip_24h_legend.json"
@@ -18,5 +18,5 @@
       -66.0
     ]
   ],
-  "content_hash": "308090bfd8aa2d51e612d30b62e958eb0ccc9113fb941df6bee50f21929fb813"
+  "content_hash": "560f36c4660005ef96190a076492aed5e96e26bcb753111516e9c3e0e5e847c4"
 }
