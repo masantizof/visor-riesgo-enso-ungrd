@@ -1,11 +1,11 @@
 {
   "dataset": "enso_riesgo",
   "kind": "enso_risk_cross",
-  "updated_at": "2026-07-22T18:13:16+00:00",
+  "updated_at": "2026-07-23T00:08:54+00:00",
   "files": {
-    "geojson": "data_lake/enso_riesgo/dt=2026-07-22/enso_riesgo_municipal.geojson",
-    "parquet": "data_lake/enso_riesgo/dt=2026-07-22/enso_riesgo_municipal.parquet",
-    "rollup": "data_lake/enso_riesgo/dt=2026-07-22/rollup_departamental.json"
+    "geojson": "data_lake/enso_riesgo/dt=2026-07-23/enso_riesgo_municipal.geojson",
+    "parquet": "data_lake/enso_riesgo/dt=2026-07-23/enso_riesgo_municipal.parquet",
+    "rollup": "data_lake/enso_riesgo/dt=2026-07-23/rollup_departamental.json"
   },
   "fase_enso": "El Niño",
   "n_municipios": 1122,
