@@ -1,11 +1,11 @@
 {
   "dataset": "acumulado_lluvia_mes",
   "kind": "table",
-  "updated_at": "2026-07-24T18:24:48+00:00",
+  "updated_at": "2026-07-26T00:03:01+00:00",
   "files": {
-    "xlsx": "data_lake/acumulado_lluvia_mes/dt=2026-07-24/lluvia-julio-26.xlsx"
+    "xlsx": "data_lake/acumulado_lluvia_mes/dt=2026-07-26/lluvia-julio-26.xlsx"
   },
   "source_url": "https://bart.ideam.gov.co/ospa/Alertas/datos_diarios_preliminares/lluvia-julio-26.xlsx",
   "descripcion": "Acumulado mensual (lluvia-julio-26.xlsx)",
-  "signature": "Fri, 24 Jul 2026 13:36:20 GMT|1956496"
+  "signature": "Sat, 25 Jul 2026 13:48:50 GMT|1956871"
 }
