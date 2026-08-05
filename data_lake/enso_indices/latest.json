@@ -1,14 +1,14 @@
 {
   "dataset": "enso_indices",
   "kind": "enso",
-  "updated_at": "2026-08-05T00:09:56+00:00",
+  "updated_at": "2026-08-05T18:27:39+00:00",
   "files": {
     "oni_raw": "data_lake/enso_indices/dt=2026-08-05/oni.ascii.txt",
     "oni_table": "data_lake/enso_indices/dt=2026-08-05/oni.parquet",
     "assessment": "data_lake/enso_indices/dt=2026-08-05/assessment.json"
   },
   "fase": "El Niño",
-  "intensidad": "débil",
-  "oni": 0.98,
-  "trimestre": "AMJ"
+  "intensidad": "moderado",
+  "oni": 1.39,
+  "trimestre": "MJJ"
 }

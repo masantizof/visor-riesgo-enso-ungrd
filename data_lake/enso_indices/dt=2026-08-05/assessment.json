@@ -1,9 +1,9 @@
 {
-  "trimestre": "AMJ",
+  "trimestre": "MJJ",
   "anio": 2026,
-  "oni": 0.98,
+  "oni": 1.39,
   "fase": "El Niño",
-  "intensidad": "débil",
+  "intensidad": "moderado",
   "teleconexion_colombia": {
     "precipitacion": "déficit (más seco que lo normal)",
     "temperatura": "por encima de lo normal",
@@ -19,6 +19,6 @@
     ]
   },
   "fuente": "https://www.cpc.ncep.noaa.gov/data/indices/oni.ascii.txt",
-  "actualizado": "2026-08-05T00:09:56+00:00",
+  "actualizado": "2026-08-05T18:27:39+00:00",
   "nota": "La fase ENSO se diagnostica del Pacífico ecuatorial (ONI), no del WRF/GFS. La teleconexión es probabilística, no determinista."
 }
