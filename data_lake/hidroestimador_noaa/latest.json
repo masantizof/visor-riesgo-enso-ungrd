@@ -1,7 +1,7 @@
 {
   "dataset": "hidroestimador_noaa",
   "kind": "raster",
-  "updated_at": "2026-08-07T00:05:59+00:00",
+  "updated_at": "2026-08-07T19:01:57+00:00",
   "files": {
     "png": "data_lake/hidroestimador_noaa/dt=2026-08-07/hidroestimador_noaa.png",
     "legend": "data_lake/hidroestimador_noaa/dt=2026-08-07/hidroestimador_noaa_legend.json"
@@ -18,5 +18,5 @@
       -66.0
     ]
   ],
-  "content_hash": "978f524152388272d5cf6bacb85973dc833ac60915c0c4264c1cd76508012648"
+  "content_hash": "9ff06a7d9a8860aa6ef071f4b167fb67c6a30e577772e17d01289ce611ee33c6"
 }
