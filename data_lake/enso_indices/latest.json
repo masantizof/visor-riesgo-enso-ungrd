@@ -1,11 +1,11 @@
 {
   "dataset": "enso_indices",
   "kind": "enso",
-  "updated_at": "2026-08-06T00:05:38+00:00",
+  "updated_at": "2026-08-07T00:06:15+00:00",
   "files": {
-    "oni_raw": "data_lake/enso_indices/dt=2026-08-06/oni.ascii.txt",
-    "oni_table": "data_lake/enso_indices/dt=2026-08-06/oni.parquet",
-    "assessment": "data_lake/enso_indices/dt=2026-08-06/assessment.json"
+    "oni_raw": "data_lake/enso_indices/dt=2026-08-07/oni.ascii.txt",
+    "oni_table": "data_lake/enso_indices/dt=2026-08-07/oni.parquet",
+    "assessment": "data_lake/enso_indices/dt=2026-08-07/assessment.json"
   },
   "fase": "El Niño",
   "intensidad": "moderado",
