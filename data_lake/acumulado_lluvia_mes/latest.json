@@ -1,11 +1,11 @@
 {
   "dataset": "acumulado_lluvia_mes",
   "kind": "table",
-  "updated_at": "2026-08-14T18:59:19+00:00",
+  "updated_at": "2026-08-15T18:34:30+00:00",
   "files": {
-    "xlsx": "data_lake/acumulado_lluvia_mes/dt=2026-08-14/lluvia-agosto-26.xlsx"
+    "xlsx": "data_lake/acumulado_lluvia_mes/dt=2026-08-15/lluvia-agosto-26.xlsx"
   },
   "source_url": "https://bart.ideam.gov.co/ospa/Alertas/datos_diarios_preliminares/lluvia-agosto-26.xlsx",
   "descripcion": "Acumulado mensual (lluvia-agosto-26.xlsx)",
-  "signature": "Fri, 14 Aug 2026 13:46:13 GMT|1954177"
+  "signature": "Sat, 15 Aug 2026 13:35:57 GMT|1954844"
 }
