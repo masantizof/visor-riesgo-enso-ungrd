@@ -1,11 +1,11 @@
 {
   "dataset": "reporte_cordoba_mes",
   "kind": "table",
-  "updated_at": "2026-08-22T18:35:54+00:00",
+  "updated_at": "2026-08-23T18:35:04+00:00",
   "files": {
-    "xlsx": "data_lake/reporte_cordoba_mes/dt=2026-08-22/CORDOBA_AGO26.xlsx"
+    "xlsx": "data_lake/reporte_cordoba_mes/dt=2026-08-23/CORDOBA_AGO26.xlsx"
   },
   "source_url": "https://bart.ideam.gov.co/ospa/Alertas/datos_diarios_preliminares/CORDOBA_AGO26.xlsx",
   "descripcion": "Acumulado mensual (CORDOBA_AGO26.xlsx)",
-  "signature": "Sat, 22 Aug 2026 15:40:43 GMT|167113"
+  "signature": "Sun, 23 Aug 2026 15:37:45 GMT|167121"
 }
