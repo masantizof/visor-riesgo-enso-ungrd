@@ -1,12 +1,12 @@
 {
   "dataset": "bart_dia",
   "kind": "table",
-  "updated_at": "2026-09-11T18:21:09+00:00",
+  "updated_at": "2026-09-13T00:45:32+00:00",
   "files": {
-    "xlsx": "data_lake/bart_dia/dt=2026-09-11/dia.xlsx",
-    "parquet": "data_lake/bart_dia/dt=2026-09-11/bart_dia.parquet"
+    "xlsx": "data_lake/bart_dia/dt=2026-09-13/dia.xlsx",
+    "parquet": "data_lake/bart_dia/dt=2026-09-13/bart_dia.parquet"
   },
   "source_url": "https://bart.ideam.gov.co/ospa/Alertas/datos_diarios_preliminares/dia.xlsx",
   "descripcion": "BART diario",
-  "signature": "Fri, 11 Sep 2026 15:24:36 GMT|48662"
+  "signature": "Sat, 12 Sep 2026 15:29:16 GMT|60272"
 }

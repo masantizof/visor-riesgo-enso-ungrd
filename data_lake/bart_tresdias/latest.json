@@ -1,12 +1,12 @@
 {
   "dataset": "bart_tresdias",
   "kind": "table",
-  "updated_at": "2026-09-11T18:21:09+00:00",
+  "updated_at": "2026-09-13T00:45:32+00:00",
   "files": {
-    "xlsx": "data_lake/bart_tresdias/dt=2026-09-11/tresdias.xlsx",
-    "parquet": "data_lake/bart_tresdias/dt=2026-09-11/bart_tresdias.parquet"
+    "xlsx": "data_lake/bart_tresdias/dt=2026-09-13/tresdias.xlsx",
+    "parquet": "data_lake/bart_tresdias/dt=2026-09-13/bart_tresdias.parquet"
   },
   "source_url": "https://bart.ideam.gov.co/ospa/Alertas/datos_diarios_preliminares/tresdias.xlsx",
   "descripcion": "BART diario",
-  "signature": "Fri, 11 Sep 2026 15:24:37 GMT|53269"
+  "signature": "Sat, 12 Sep 2026 15:29:31 GMT|65175"
 }

@@ -1,11 +1,11 @@
 {
   "dataset": "acumulado_tempmax_mes",
   "kind": "table",
-  "updated_at": "2026-09-11T18:21:18+00:00",
+  "updated_at": "2026-09-13T00:46:02+00:00",
   "files": {
-    "xlsx": "data_lake/acumulado_tempmax_mes/dt=2026-09-11/Temp-max-septiembre-26.xlsx"
+    "xlsx": "data_lake/acumulado_tempmax_mes/dt=2026-09-13/Temp-max-septiembre-26.xlsx"
   },
   "source_url": "https://bart.ideam.gov.co/ospa/Alertas/datos_diarios_preliminares/Temp-max-septiembre-26.xlsx",
   "descripcion": "Acumulado mensual (Temp-max-septiembre-26.xlsx)",
-  "signature": "Fri, 11 Sep 2026 13:29:30 GMT|90045"
+  "signature": "Sat, 12 Sep 2026 13:46:07 GMT|89565"
 }
