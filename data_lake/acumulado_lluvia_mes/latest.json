@@ -1,11 +1,11 @@
 {
   "dataset": "acumulado_lluvia_mes",
   "kind": "table",
-  "updated_at": "2026-09-18T18:13:23+00:00",
+  "updated_at": "2026-09-20T00:52:24+00:00",
   "files": {
-    "xlsx": "data_lake/acumulado_lluvia_mes/dt=2026-09-18/lluvia-septiembre-26.xlsx"
+    "xlsx": "data_lake/acumulado_lluvia_mes/dt=2026-09-20/lluvia-septiembre-26.xlsx"
   },
   "source_url": "https://bart.ideam.gov.co/ospa/Alertas/datos_diarios_preliminares/lluvia-septiembre-26.xlsx",
   "descripcion": "Acumulado mensual (lluvia-septiembre-26.xlsx)",
-  "signature": "Fri, 18 Sep 2026 13:56:29 GMT|1953837"
+  "signature": "Sat, 19 Sep 2026 13:37:25 GMT|1955745"
 }
