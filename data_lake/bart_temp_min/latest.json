@@ -1,11 +1,11 @@
 {
   "dataset": "bart_temp_min",
   "kind": "table",
-  "updated_at": "2026-10-11T00:13:23+00:00",
+  "updated_at": "2026-10-12T00:22:15+00:00",
   "files": {
-    "xlsx": "data_lake/bart_temp_min/dt=2026-10-11/temperaturamin.xlsx"
+    "xlsx": "data_lake/bart_temp_min/dt=2026-10-12/temperaturamin.xlsx"
   },
   "source_url": "https://bart.ideam.gov.co/ospa/Alertas/datos_diarios_preliminares/temperaturamin.xlsx",
   "descripcion": "BART diario",
-  "signature": "Sat, 10 Oct 2026 15:23:07 GMT|297257"
+  "signature": "Sun, 11 Oct 2026 15:26:46 GMT|297399"
 }
