@@ -1,11 +1,11 @@
 {
   "dataset": "acumulado_tempmax_mes",
   "kind": "table",
-  "updated_at": "2026-10-25T18:19:14+00:00",
+  "updated_at": "2026-11-03T00:43:43+00:00",
   "files": {
-    "xlsx": "data_lake/acumulado_tempmax_mes/dt=2026-10-25/Temp-max-octubre-26.xlsx"
+    "xlsx": "data_lake/acumulado_tempmax_mes/dt=2026-11-03/Temp-max-noviembre-26.xlsx"
   },
-  "source_url": "https://bart.ideam.gov.co/ospa/Alertas/datos_diarios_preliminares/Temp-max-octubre-26.xlsx",
-  "descripcion": "Acumulado mensual (Temp-max-octubre-26.xlsx)",
-  "signature": "Sun, 25 Oct 2026 13:52:25 GMT|92235"
+  "source_url": "https://bart.ideam.gov.co/ospa/Alertas/datos_diarios_preliminares/Temp-max-noviembre-26.xlsx",
+  "descripcion": "Acumulado mensual (Temp-max-noviembre-26.xlsx)",
+  "signature": "Mon, 02 Nov 2026 14:16:30 GMT|88260"
 }

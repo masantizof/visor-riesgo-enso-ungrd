@@ -1,11 +1,11 @@
 {
   "dataset": "acumulado_lluvia_mes",
   "kind": "table",
-  "updated_at": "2026-10-25T18:19:13+00:00",
+  "updated_at": "2026-11-03T00:43:42+00:00",
   "files": {
-    "xlsx": "data_lake/acumulado_lluvia_mes/dt=2026-10-25/lluvia-octubre-26.xlsx"
+    "xlsx": "data_lake/acumulado_lluvia_mes/dt=2026-11-03/lluvia-noviembre-26.xlsx"
   },
-  "source_url": "https://bart.ideam.gov.co/ospa/Alertas/datos_diarios_preliminares/lluvia-octubre-26.xlsx",
-  "descripcion": "Acumulado mensual (lluvia-octubre-26.xlsx)",
-  "signature": "Sun, 25 Oct 2026 13:39:49 GMT|1955731"
+  "source_url": "https://bart.ideam.gov.co/ospa/Alertas/datos_diarios_preliminares/lluvia-noviembre-26.xlsx",
+  "descripcion": "Acumulado mensual (lluvia-noviembre-26.xlsx)",
+  "signature": "Mon, 02 Nov 2026 14:16:56 GMT|1953104"
 }
