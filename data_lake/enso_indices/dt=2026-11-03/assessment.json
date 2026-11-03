@@ -19,6 +19,6 @@
     ]
   },
   "fuente": "https://www.cpc.ncep.noaa.gov/data/indices/oni.ascii.txt",
-  "actualizado": "2026-11-03T00:43:44+00:00",
+  "actualizado": "2026-11-03T18:22:34+00:00",
   "nota": "La fase ENSO se diagnostica del Pacífico ecuatorial (ONI), no del WRF/GFS. La teleconexión es probabilística, no determinista."
 }
