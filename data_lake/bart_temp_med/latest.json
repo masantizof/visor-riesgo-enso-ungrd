@@ -1,11 +1,11 @@
 {
   "dataset": "bart_temp_med",
   "kind": "table",
-  "updated_at": "2026-11-03T18:22:23+00:00",
+  "updated_at": "2026-11-04T18:35:23+00:00",
   "files": {
-    "xlsx": "data_lake/bart_temp_med/dt=2026-11-03/temperaturamed.xlsx"
+    "xlsx": "data_lake/bart_temp_med/dt=2026-11-04/temperaturamed.xlsx"
   },
   "source_url": "https://bart.ideam.gov.co/ospa/Alertas/datos_diarios_preliminares/temperaturamed.xlsx",
   "descripcion": "BART diario",
-  "signature": "Tue, 03 Nov 2026 15:25:09 GMT|214819"
+  "signature": "Wed, 04 Nov 2026 14:55:21 GMT|186366"
 }
