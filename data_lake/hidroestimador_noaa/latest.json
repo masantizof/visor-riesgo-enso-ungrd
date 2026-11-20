@@ -1,10 +1,10 @@
 {
   "dataset": "hidroestimador_noaa",
   "kind": "raster",
-  "updated_at": "2026-11-18T00:43:40+00:00",
+  "updated_at": "2026-11-20T00:26:32+00:00",
   "files": {
-    "png": "data_lake/hidroestimador_noaa/dt=2026-11-18/hidroestimador_noaa.png",
-    "legend": "data_lake/hidroestimador_noaa/dt=2026-11-18/hidroestimador_noaa_legend.json"
+    "png": "data_lake/hidroestimador_noaa/dt=2026-11-20/hidroestimador_noaa.png",
+    "legend": "data_lake/hidroestimador_noaa/dt=2026-11-20/hidroestimador_noaa_legend.json"
   },
   "source_url": "https://visualizador.ideam.gov.co/gisserver/rest/services/StoryMaps_IDA/Precipitacion__Acumulada/MapServer/export",
   "descripcion": "Hidroestimador satelital NOAA",
@@ -18,5 +18,5 @@
       -66.0
     ]
   ],
-  "content_hash": "9f8eaf8316ff92ea84a5395b410ddb062a77a36bc2b2a5799e56322dd5f7cc21"
+  "content_hash": "b2415d4ec3939fe80d6ebc5d8e1f0b8d31be4bb2dec3c9bcff022c016424259b"
 }
